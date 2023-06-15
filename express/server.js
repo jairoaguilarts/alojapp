@@ -62,6 +62,20 @@ app.post('/agregarFavorito', (req, res) => {
       });
 });
 
+app.delete('/eliminarFavorito/:id', (req, res) => {
+  Favorito.deleteOne({ id: req.params.id })
+        .then(result => {
+            if(result.deletedCount === 0){
+                res.status(404).json({ message: 'Favorito no encontrado con el id proporcionado' });
+            } else {
+                res.json({ message: 'Favorito eliminado con éxito' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Ocurrió un error al eliminar el favorito' });
+        });
+});
+
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
