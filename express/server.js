@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
@@ -15,6 +16,9 @@ mongoose.connect(MongoUri, {
 mongoose.connection.once('open', () => {
   console.log("Conectado a mongo")
 })
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Conexion establecida');
@@ -31,7 +35,7 @@ app.get('/usuarios', (req, res) => {
   });
 });
 
-app.get('/agregarFavorito', (req, res) => {
+app.get('/favoritos', (req, res) => {
   Favorito.find({}, (error, favoritos) => {
     if (error) {
       console.log('Error al obtener favoritos:', error);
@@ -40,6 +44,22 @@ app.get('/agregarFavorito', (req, res) => {
       res.json(favoritos);
     }
   });
+});
+
+app.post('/agregarFavorito', (req, res) => {
+  const nuevoFavorito = new Favorito({
+      id: req.body.id,
+      idUsuario: req.body.idUsuario,
+      idAlojamiento: req.body.idAlojamiento
+  });
+
+  nuevoFavorito.save()
+      .then(favorito => {
+          res.json(favorito);
+      })
+      .catch(error => {
+          res.status(500).send(error);
+      });
 });
 
 app.listen(port, () => {
