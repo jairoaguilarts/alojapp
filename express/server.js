@@ -36,14 +36,14 @@ app.get('/usuarios', (req, res) => {
 });
 
 app.get('/favoritos', (req, res) => {
-  Favorito.find({}, (error, favoritos) => {
-    if (error) {
-      console.log('Error al obtener favoritos:', error);
-      res.status(500).json({ error: 'Error al obtener favoritos' });
-    } else {
-      res.json(favoritos);
-    }
-  });
+  Favorito.find({})
+      .then(favoritos => {
+          res.json(favoritos);
+      })
+      .catch(error => {
+          console.log('Error al obtener favoritos:', error);
+          res.status(500).json({ error: 'Error al obtener favoritos' });
+      });
 });
 
 app.post('/agregarFavorito', (req, res) => {
