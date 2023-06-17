@@ -1,26 +1,39 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const InicioSesion = () => {
+  const logoImage = require('alojapp/Images/Alojapplogo.png');
+
+  const renderLogo = () => {
+    if (logoImage) {
+      return (
+        <Image
+          source={logoImage}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      );
+    } else {
+      return (
+        <Text style={styles.logoFallback}>Logo</Text>
+      );
+    }
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.left}>
-        {/* Agregar lógica para volver atrás */}
-        <TouchableOpacity style={styles.backButton}>
-          <Text style={styles.backButtonIcon}>arrow_back_ios_new</Text>
-        </TouchableOpacity>
+      <View style={styles.logoContainer}>
+        {renderLogo()}
       </View>
-
       <View style={styles.pageContent}>
         <View style={styles.block}>
           <Text style={styles.heading}>Inicio de sesión</Text>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Correo electrónico" />
+            <TextInput style={styles.input} placeholder="Correo electrónico" placeholderTextColor="#fff" />
           </View>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Contraseña" secureTextEntry={true} />
+            <TextInput style={styles.input} placeholder="Contraseña"  placeholderTextColor="#fff" secureTextEntry={true} />
           </View>
 
           <TouchableOpacity style={styles.forgotPasswordLink}>
@@ -46,18 +59,26 @@ const InicioSesion = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#181c2c',
+    color: '#eaeaf2',
+    textAlign: 'center',
+    
   },
-  left: {
-    flexDirection: 'row',
+  logoContainer: {
     alignItems: 'center',
-    paddingLeft: 10,
+    marginTop: 20,
   },
-  backButton: {
-    paddingVertical: 10,
-    paddingRight: 10,
+  logo: {
+    width: 200,
+    height: 200,
   },
-  backButtonIcon: {
-    fontSize: 24,
+  logoFallback: {
+    width: 200,
+    height: 100,
+    backgroundColor: '#ccc',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 32,
   },
   pageContent: {
     flex: 1,
@@ -66,22 +87,26 @@ const styles = StyleSheet.create({
   },
   block: {
     width: '80%',
+    height: '90%',
     alignItems: 'center',
   },
   heading: {
     fontSize: 20,
     marginBottom: 20,
+    color: '#fff',
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 10,
+    marginBottom: 15,
+    color: '#fff',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#2196F3',
     borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingVertical: 10,
+    color: '#fff',
   },
   forgotPasswordLink: {
     alignSelf: 'flex-end',
@@ -89,6 +114,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     textDecorationLine: 'underline',
+    color: '#fff',
   },
   buttonContainer: {
     width: '100%',
@@ -104,6 +130,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+    
   },
   createAccountLink: {
     alignSelf: 'center',
@@ -111,11 +138,14 @@ const styles = StyleSheet.create({
   },
   createAccountText: {
     textDecorationLine: 'underline',
+    color: '#fff',
   },
   methodText: {
     marginTop: 20,
     marginBottom: 10,
+    color: '#fff',
   },
+  
 });
 
 export default InicioSesion;

@@ -1,8 +1,20 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationProp } from '@react-navigation/native';
 
-const Inicio = () => {
-  const logoImage = require('./Images/Alojapplogo.png');
+type RootStackParamList = {
+  Inicio: undefined;
+  InicioSesion: undefined;
+  // Agrega otras rutas aquí si es necesario
+};
+type InicioProps = {
+  navigation: NavigationProp<RootStackParamList, 'Inicio'>;
+};
+
+const Inicio: React.FC<InicioProps> =  ({ navigation }) => {
+  const logoImage = require('alojapp/Images/Alojapplogo.png');
 
   const renderLogo = () => {
     if (logoImage) {
@@ -21,7 +33,7 @@ const Inicio = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.logoContainer}>
         {renderLogo()}
       </View>
@@ -29,9 +41,8 @@ const Inicio = () => {
         Un lugar seguro que te ayudará a encontrar el alojamiento ideal para tus viajes
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {/* Agregar lógica para iniciar sesión */}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('InicioSesion')}>
           <Text style={styles.buttonText}>Iniciar sesión</Text>
-
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
@@ -44,9 +55,17 @@ const Inicio = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#181c2c',
+    color: '#eaeaf2',
+    textAlign: 'center',
+  },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 5,
   },
   logo: {
     width: 200,
@@ -64,6 +83,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     marginTop: 30,
+    color: '#eaeaf2',
+    width: '99%',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -78,6 +99,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    
   },
 });
 

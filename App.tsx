@@ -7,9 +7,15 @@
 
 import mongoose from 'mongoose';
 import React from 'react';
-import Inicio from './inicio';
-import InicioSesion from './inicio_sesion';
+import Inicio from './screens/inicio';
+import InicioSesion from './screens/inicio_sesion';
 import type {PropsWithChildren} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+
+const Stack = createNativeStackNavigator();
 import {
   SafeAreaView,
   ScrollView,
@@ -67,7 +73,14 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  return <InicioSesion />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Inicio" component={Inicio} />
+        <Stack.Screen name="InicioSesion" component={InicioSesion} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -87,6 +100,7 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  
 });
 
 export default App;
