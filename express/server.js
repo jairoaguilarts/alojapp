@@ -3,12 +3,12 @@ const app = express();
 const port = 3000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const stripe = require('stripe')('sk_test_51NJS8vHe3t6WjAoJtlqFxm85wkNciUnjj9qHGSrhS6XbXpZ3gw1rQ4tkhCC0661pZhF9Clz46rroAWCF4b1xSqHg00RnEKefvP');
 
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
 const Propiedad = require("./schemas/propiedades");
 const Detalles_Propiedad = require("./schemas/detalles_propiedad");
-const detalles_propiedad = require('./schemas/detalles_propiedad');
 
 const MongoUri = "mongodb+srv://GrupoUX:ProyectoUX2023@cluster0.4nq8gyr.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(MongoUri, { 
@@ -27,32 +27,36 @@ app.get('/', (req, res) => {
   res.send('Conexion establecida');
 });
 
-app.get('/usuarios', (req, res) => {
-  Usuario.find({}, (error, usuarios) => {
-    if (error) {
-      console.log('Error al obtener usuarios:', error);
-      res.status(500).json({ error: 'Error al obtener usuarios' });
-    } else {
-      res.json(usuarios);
-    }
-  });
-});
-app.post('/agregarUsuario', (req, res) => {
-  const nuevoUsuario = new Usuario({
-      id: req.body.id,
-      nombre: req.body.nombre,
-      contrasenia: req.body.contrasenia,
-      correo: req.body.correo,
-  });
-  nuevoUsuario.save()
-  .then(usuario => {
-      res.json(usuario);
-  })
-  .catch(error => {
-      res.status(500).send(error);
-  });
+app.get('/usuarios', async (req, res) => {
+  try {
+    const usuarios = await Usuario.find({});
+    res.json(usuarios);
+  } catch (error) {
+    console.log('Error al obtener usuarios:', error);
+    res.status(500).json({ error: 'Error al obtener usuarios' });
+  }
 });
 
+app.post('/agregarUsuario', async (req, res) => {
+  const { id, nombre, nombre_usuario, contrasenia, correo } = req.body;
+  try {
+    // Comprueba si ya existe un usuario con el mismo nombre de usuario
+    const usuarioExistente = await Usuario.findOne({ nombre_usuario: nombre_usuario });
+    if (usuarioExistente) {
+      return res.status(400).json({ error: 'Ya existe un usuario con ese nombre de usuario' });
+    }
+
+    const nuevoUsuario = new Usuario({ id, nombre, nombre_usuario, contrasenia, correo });
+    // Crea un nuevo cliente en Stripe
+    const customer = await stripe.customers.create({ email: correo });
+    nuevoUsuario.stripeCustomerId = customer.id;
+    await nuevoUsuario.save();
+    res.json(nuevoUsuario);
+  } catch (error) {
+    console.log('Error al agregar usuario:', error);
+    res.status(500).send({ error: error.message });
+  }
+});
 
 
 
@@ -86,6 +90,7 @@ app.post('/agregarPropiedades', (req, res) => {
 });
 
 
+
 app.get('/detalles_propiedad', (req, res) => {
   Detalles_Propiedad.find({}, (error, detalles_propiedad) => {
     if (error) {
@@ -96,7 +101,6 @@ app.get('/detalles_propiedad', (req, res) => {
     }
   });
 });
-
 
 app.post('/agregarDetallesPropiedades', (req, res) => {
   const nuevoDetallesPropiedad= new Detalles_Propiedad({
@@ -158,6 +162,39 @@ app.delete('/eliminarFavorito/:id', (req, res) => {
         .catch(error => {
             res.status(500).json({ error: 'Ocurrió un error al eliminar el favorito' });
         });
+});
+
+app.post('/card/:username', async (req, res) => {
+  const { username } = req.params;
+  const { card } = req.body;
+  try {
+      // Busca al usuario en la base de datos
+      const user = await Usuario.findOne({ nombre_usuario: username });
+      if (!user) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+      // Añade la tarjeta al cliente de Stripe
+      const source = await stripe.customers.createSource(user.stripeCustomerId, { source: card });
+      res.json(source);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/cards/:username', async (req, res) => {
+  const { username } = req.params;
+  try {
+      // Busca al usuario en la base de datos
+      const user = await Usuario.findOne({ nombre_usuario: username });
+      if (!user) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+      // Obtiene las tarjetas del cliente de Stripe
+      const cards = await stripe.customers.listSources(user.stripeCustomerId, { object: 'card', limit: 3 });
+      res.json(cards);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(port, () => {
