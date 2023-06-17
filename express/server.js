@@ -164,7 +164,7 @@ app.delete('/eliminarFavorito/:id', (req, res) => {
         });
 });
 
-app.post('/card/:username', async (req, res) => {
+app.post('/addCard/:username', async (req, res) => {
   const { username } = req.params;
   const { card } = req.body;
   try {
@@ -196,6 +196,27 @@ app.get('/cards/:username', async (req, res) => {
       res.status(500).json({ error: error.message });
   }
 });
+
+app.delete('/deleteCard/:username/:cardId', async (req, res) => {
+  const { username, cardId } = req.params;
+
+  try {
+      // Busca al usuario en la base de datos
+      const user = await Usuario.findOne({ nombre_usuario: username });
+      if (!user) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+      // Elimina la tarjeta del cliente de Stripe
+      const card = await stripe.customers.deleteSource(
+          user.stripeCustomerId,
+          cardId
+      );
+      res.json(card);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
