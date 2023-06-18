@@ -7,7 +7,15 @@
 
 import mongoose from 'mongoose';
 import React from 'react';
+import Inicio from './screens/inicio';
+import InicioSesion from './screens/inicio_sesion';
 import type {PropsWithChildren} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+
+const Stack = createNativeStackNavigator();
 import {
   SafeAreaView,
   ScrollView,
@@ -34,6 +42,7 @@ type SectionProps = PropsWithChildren<{
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
+    
     <View style={styles.sectionContainer}>
       <Text
         style={[
@@ -65,36 +74,12 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="Hola Mundo">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Inicio" component={Inicio} />
+        <Stack.Screen name="InicioSesion" component={InicioSesion} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -115,6 +100,7 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  
 });
 
 export default App;
