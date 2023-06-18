@@ -199,7 +199,6 @@ app.get('/cards/:username', async (req, res) => {
 
 app.delete('/deleteCard/:username/:cardId', async (req, res) => {
   const { username, cardId } = req.params;
-
   try {
       // Busca al usuario en la base de datos
       const user = await Usuario.findOne({ nombre_usuario: username });
