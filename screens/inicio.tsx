@@ -8,6 +8,7 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta1: undefined;
+  CrearCuenta2: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 type InicioProps = {

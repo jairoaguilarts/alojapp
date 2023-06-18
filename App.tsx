@@ -35,6 +35,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import CrearCuenta1 from './screens/crear_cuenta';
+import CrearCuenta2 from './screens/crear_cuenta2';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -80,6 +81,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Inicio" component={Inicio} />
         <Stack.Screen name="InicioSesion" component={InicioSesion} />
         <Stack.Screen name="CrearCuenta1" component={CrearCuenta1} />
+        <Stack.Screen name="CrearCuenta2" component={CrearCuenta2} />
       </Stack.Navigator>
     </NavigationContainer>
   );
