@@ -7,6 +7,7 @@ import { NavigationProp } from '@react-navigation/native';
 type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
+  CrearCuenta1: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 type InicioProps = {
@@ -46,7 +47,7 @@ const Inicio: React.FC<InicioProps> =  ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {/* Agregar lógica para crear cuenta */}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CrearCuenta1')}>
           <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
