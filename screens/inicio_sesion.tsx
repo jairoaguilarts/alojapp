@@ -29,7 +29,7 @@ const InicioSesion = () => {
           <Text style={styles.heading}>Inicio de sesión</Text>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Correo electrónico" placeholderTextColor="#fff" />
+            <TextInput style={styles.input} placeholder="Usuario" placeholderTextColor="#fff" />
           </View>
 
           <View style={styles.inputContainer}>
