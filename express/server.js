@@ -14,6 +14,7 @@ const MongoUri = "mongodb+srv://GrupoUX:ProyectoUX2023@cluster0.4nq8gyr.mongodb.
 mongoose.connect(MongoUri, { 
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 mongoose.connection.once('open', () => {
@@ -22,6 +23,14 @@ mongoose.connection.once('open', () => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use((req,res,next) => {
+//   req.on('data', (chunk) => {
+//       const data = JSON.parse(chunk);
+//       req.body = data;
+//       next();
+//   });
+//   });
 
 app.get('/', (req, res) => {
   res.send('Conexion establecida');
@@ -34,18 +43,28 @@ app.get('/usuarios', async (req, res) => {
   } catch (error) {
     console.log('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });
-  }
+  } 
 });
 
 app.post('/agregarUsuario', async (req, res) => {
   const { id, nombre, nombre_usuario, contrasenia, correo } = req.body;
   try {
     // Comprueba si ya existe un usuario con el mismo nombre de usuario
-    const usuarioExistente = await Usuario.findOne({ nombre_usuario: nombre_usuario });
+    const usuarioExistente = await Usuario.findOne({
+      $or: [
+        { nombre_usuario: nombre_usuario },
+        { correo: correo }
+      ]
+    });
     if (usuarioExistente) {
-      return res.status(400).json({ error: 'Ya existe un usuario con ese nombre de usuario' });
+      let errorMensaje = '';
+      if (usuarioExistente.nombre_usuario === nombre_usuario) {
+        errorMensaje = 'Ya existe un usuario con ese nombre de usuario';
+      } else {
+        errorMensaje = 'Ya existe un usuario con ese correo electrónico, porfavor Inicia Sesion';
+      }
+      return res.status(400).json({ error: errorMensaje });
     }
-
     const nuevoUsuario = new Usuario({ id, nombre, nombre_usuario, contrasenia, correo });
     // Crea un nuevo cliente en Stripe
     const customer = await stripe.customers.create({ email: correo });
