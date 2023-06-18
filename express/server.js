@@ -14,7 +14,7 @@ const MongoUri = "mongodb+srv://GrupoUX:ProyectoUX2023@cluster0.4nq8gyr.mongodb.
 mongoose.connect(MongoUri, { 
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
+  // useCreateIndex: true, da error
 });
 
 mongoose.connection.once('open', () => {
