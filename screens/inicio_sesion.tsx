@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { FIREBASE_auth } from '../FirebaseConfig';
 
 const InicioSesion = () => {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
-
+  const auth =FIREBASE_auth;
   const renderLogo = () => {
     if (logoImage) {
       return (
