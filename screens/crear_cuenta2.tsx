@@ -1,24 +1,7 @@
 import React from 'react';
 import { View, Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationProp } from '@react-navigation/native';
 
-
-type RootStackParamList = {
-    Inicio: undefined;
-    InicioSesion: undefined;
-    CrearCuenta1: undefined;
-    CrearCuenta2: undefined;
-    // Agrega otras rutas aquí si es necesario
-  };
-
-type CrearProps = {
-    navigation: NavigationProp<RootStackParamList, 'CrearCuenta1'>;
-  };
-
-
-const CrearCuenta1: React.FC<CrearProps> =  ({ navigation }) => {
+const CrearCuenta2 = () => {
   return (
     <View style={styles.container}>
         <View style={styles.pageContent}>
@@ -30,16 +13,16 @@ const CrearCuenta1: React.FC<CrearProps> =  ({ navigation }) => {
 
       <View style={styles.block}>
         <Text style={styles.heading}>Crear cuenta</Text>
-        <Text style={styles.heading}  >Paso 1 de 2</Text>
+        <Text style={styles.heading}  >Paso 2 de 2</Text>
 
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="Correo electrónico"  placeholderTextColor="#fff" value="" onChangeText={() => {}}/>
+          <TextInput style={styles.input} placeholder="Nombre completo"  placeholderTextColor="#fff" value="" onChangeText={() => {}}/>
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Contraseña"
+            placeholder="Fecha de nacimiento"
             secureTextEntry
             placeholderTextColor="#fff"
             value=""
@@ -50,7 +33,7 @@ const CrearCuenta1: React.FC<CrearProps> =  ({ navigation }) => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Confirma tu contraseña"
+            placeholder="Numero de telefono"
             placeholderTextColor="#fff"
             secureTextEntry
             value=""
@@ -59,8 +42,8 @@ const CrearCuenta1: React.FC<CrearProps> =  ({ navigation }) => {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('CrearCuenta2') } style={styles.button}>
-            <Text style={styles.buttonText}>Continuar</Text>
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.buttonText}>Crear Cuenta</Text>
           </TouchableOpacity>
         </View>
 
@@ -176,4 +159,4 @@ const styles = StyleSheet.create({
     
   });
 
-export default CrearCuenta1;
+export default CrearCuenta2;
