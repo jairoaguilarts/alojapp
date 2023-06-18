@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
@@ -35,6 +35,7 @@ const Inicio: React.FC<InicioProps> =  ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+    <KeyboardAvoidingView behavior="padding">
       <View style={styles.logoContainer}>
         {renderLogo()}
       </View>
@@ -51,6 +52,7 @@ const Inicio: React.FC<InicioProps> =  ({ navigation }) => {
           <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };

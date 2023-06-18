@@ -4,12 +4,12 @@ const port = 3000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const stripe = require('stripe')('sk_test_51NJS8vHe3t6WjAoJtlqFxm85wkNciUnjj9qHGSrhS6XbXpZ3gw1rQ4tkhCC0661pZhF9Clz46rroAWCF4b1xSqHg00RnEKefvP');
-
+const jwt = require('jsonwebtoken');
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
 const Propiedad = require("./schemas/propiedades");
 const Detalles_Propiedad = require("./schemas/detalles_propiedad");
-
+require('dotenv').config();
 const MongoUri = "mongodb+srv://GrupoUX:ProyectoUX2023@cluster0.4nq8gyr.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(MongoUri, { 
   useNewUrlParser: true,
@@ -36,10 +36,24 @@ app.get('/', (req, res) => {
   res.send('Conexion establecida');
 });
 
-app.get('/usuarios', async (req, res) => {
+app.post('/usuarios', async (req, res) => {
+  const { nombre_usuario, contrasenia } = req.body;
   try {
-    const usuarios = await Usuario.find({});
-    res.json(usuarios);
+   
+    if(!nombre_usuario.trim() || !contrasenia.trim()){
+      return res.status(400).json({ error: 'Error falta el Usuario o Contraseña ' });
+    }
+    const usuario = await Usuario.findOne({nombre_usuario});
+    
+    if(!usuario){
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    const contrasenia_adecuada=usuario.CompararContrasenia(contrasenia)
+    if(!contrasenia_adecuada){
+      return res.status(404).json({ error: 'Contraseña Incorrecta' });
+    }
+    const token=jwt.sign({usuariorId:usuario._id},process.env.jwt_secreto,{expiresIn:'1d'})
+    res.json({success:true,usuario:{nombre:usuario.nombre,correo:usuario.correo,id:usuario._id,stripeCustomerId:usuario.stripeCustomerId,token}});
   } catch (error) {
     console.log('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });
