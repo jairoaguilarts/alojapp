@@ -241,12 +241,12 @@ app.delete('/eliminarFavorito', (req, res) => {
     });
 });
 
-app.post('/addCard/:username', async (req, res) => {
-  const { username } = req.params;
+app.post('/addCard', async (req, res) => {
+  const { firebaseUID } = req.body;
   const { card } = req.body;
   try {
     // Busca al usuario en la base de datos
-    const user = await Usuario.findOne({ nombre_usuario: username });
+    const user = await Usuario.findOne({ firebaseUID: firebaseUID });
     if (!user) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
@@ -258,11 +258,11 @@ app.post('/addCard/:username', async (req, res) => {
   }
 });
 
-app.get('/cards/:username', async (req, res) => {
-  const { username } = req.params;
+app.get('/cards', async (req, res) => {
+  const { firebaseUID } = req.body;
   try {
     // Busca al usuario en la base de datos
-    const user = await Usuario.findOne({ nombre_usuario: username });
+    const user = await Usuario.findOne({ firebaseUID: firebaseUID });
     if (!user) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
@@ -274,12 +274,12 @@ app.get('/cards/:username', async (req, res) => {
   }
 });
 
-app.delete('/deleteCard/:username/:cardId', async (req, res) => {
-  const { username, cardId } = req.params;
+app.delete('/deleteCard/:firebaseUID/:cardId', async (req, res) => {
+  const { firebaseUID, cardId } = req.params;
 
   try {
     // Busca al usuario en la base de datos
-    const user = await Usuario.findOne({ nombre_usuario: username });
+    const user = await Usuario.findOne({ firebaseUID: firebaseUID });
     if (!user) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
@@ -290,6 +290,7 @@ app.delete('/deleteCard/:username/:cardId', async (req, res) => {
     );
     res.json(card);
   } catch (error) {
+    console.log('Error al eliminar tarjeta:', error);
     res.status(500).json({ error: error.message });
   }
 });
