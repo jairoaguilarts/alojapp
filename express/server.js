@@ -21,7 +21,7 @@ const Favorito = require("./schemas/favoritos");
 const Propiedad = require("./schemas/propiedades");
 const Detalles_Propiedad = require("./schemas/detalles_propiedad");
 
-mongoose.connect(mongoUri, { 
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -30,55 +30,65 @@ mongoose.connection.once('open', () => {
   console.log("Conectado a mongo")
 })
 
-app.get('/', (req, res) => {
-  res.send('Conexion establecida');
-});
-
 app.post('/logIn', async (req, res) => {
   const { correo, contrasenia } = req.body;
   try {
-    if(!correo.trim() || !contrasenia.trim()){
+    if (!correo.trim() || !contrasenia.trim()) {
       return res.status(400).json({ error: 'Error falta el Usuario o Contraseña ' });
     }
     const auth = getAuth();
     let firebaseUID = '';
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, correo, contrasenia);
-        const user = userCredential.user;
-        firebaseUID = user.uid;
+      const userCredential = await signInWithEmailAndPassword(auth, correo, contrasenia);
+      const user = userCredential.user;
+      firebaseUID = user.uid;
     } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        return res.status(500).send({
-            "msg": "Credenciales incorrectas"
-        });
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return res.status(500).send({
+        "msg": "Credenciales incorrectas"
+      });
     }
 
-    const usuario = await Usuario.findOne({firebaseUID});
-    
-    if(!usuario){
+    const usuario = await Usuario.findOne({ firebaseUID });
+
+    if (!usuario) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
     const contrasenia_adecuada = usuario.CompararContrasenia(contrasenia);
-    if(!contrasenia_adecuada){
+    if (!contrasenia_adecuada) {
       return res.status(404).json({ error: 'Contraseña Incorrecta' });
     }
-    res.json(
-      {
-        success: true,
-        usuario: {
-          nombre: usuario.nombre,
-          nombre_usuario: usuario.nombre_usuario,
-          correo: usuario.correo,
-          id: usuario._id,
-          stripeCustomerId: usuario.stripeCustomerId, 
-          firebaseUID: usuario.firebaseUID
-        }
-      });
+    res.json({
+      success: true,
+      usuario: {
+        nombre: usuario.nombre,
+        nombre_usuario: usuario.nombre_usuario,
+        correo: usuario.correo,
+        id: usuario._id,
+        stripeCustomerId: usuario.stripeCustomerId,
+        firebaseUID: usuario.firebaseUID
+      }
+    });
   } catch (error) {
     console.log('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });
-  } 
+  }
+});
+
+app.get('/logOut', (req, res) => {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      res.status(200).send({
+        "msg": "Cierre de sesión exitoso"
+      })
+    })
+    .catch((error) => {
+      res.status(500).send({
+        "msg": "Error al cerrar sesión"
+      })
+    });
 });
 
 app.post('/agregarUsuario', async (req, res) => {
@@ -110,13 +120,13 @@ app.post('/agregarUsuario', async (req, res) => {
     // Crea el usuario en firebase
     const auth = getAuth();
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasenia);
-        const user = userCredential.user;
-        nuevoUsuario.firebaseUID = user.uid;
+      const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasenia);
+      const user = userCredential.user;
+      nuevoUsuario.firebaseUID = user.uid;
     } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        return res.status(500).send("El usuario no pudo ser creado en firebase");
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return res.status(500).send("El usuario no pudo ser creado en firebase");
     }
 
     await nuevoUsuario.save();
@@ -139,21 +149,21 @@ app.get('/propiedades', (req, res) => {
 });
 
 app.post('/agregarPropiedades', (req, res) => {
-  const nuevoPropiedad= new Propiedad({
-      id_propiedad: req.body.id_propiedad,
-      id_usuario: req.body.id_usuario,
-      localizamiento: req.body.localizamiento,
-      precio: req.body.precio,
-      cuartos: req.body.cuartos,
-      banios: req.body.banios,
+  const nuevoPropiedad = new Propiedad({
+    id_propiedad: req.body.id_propiedad,
+    id_usuario: req.body.id_usuario,
+    localizamiento: req.body.localizamiento,
+    precio: req.body.precio,
+    cuartos: req.body.cuartos,
+    banios: req.body.banios,
   });
   nuevoPropiedad.save()
-      .then(propiedad => {
-          res.json(propiedad);
-      })
-      .catch(error => {
-          res.status(500).send(error);
-      });
+    .then(propiedad => {
+      res.json(propiedad);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    });
 });
 
 
@@ -170,97 +180,94 @@ app.get('/detalles_propiedad', (req, res) => {
 });
 
 app.post('/agregarDetallesPropiedades', (req, res) => {
-  const nuevoDetallesPropiedad= new Detalles_Propiedad({
-      id_propiedad: req.body.id_propiedad,
-      max_huespedes: req.body.max_huespedes,
-      camas: req.body.camas,
-      cocina: req.body.cocina,
-      wifi: req.body.wifi,
-      parqueo: req.body.parqueo,
+  const nuevoDetallesPropiedad = new Detalles_Propiedad({
+    id_propiedad: req.body.id_propiedad,
+    max_huespedes: req.body.max_huespedes,
+    camas: req.body.camas,
+    cocina: req.body.cocina,
+    wifi: req.body.wifi,
+    parqueo: req.body.parqueo,
   });
   nuevoDetallesPropiedad.save()
-      .then(detalles_propiedades => {
-          res.json(detalles_propiedades);
-      })
-      .catch(error => {
-          res.status(500).send(error);
-      });
+    .then(detalles_propiedades => {
+      res.json(detalles_propiedades);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    });
 });
-
-
-
 
 app.get('/favoritos', (req, res) => {
   Favorito.find({})
-      .then(favoritos => {
-          res.json(favoritos);
-      })
-      .catch(error => {
-          console.log('Error al obtener favoritos:', error);
-          res.status(500).json({ error: 'Error al obtener favoritos' });
-      });
+    .then(favoritos => {
+      res.json(favoritos);
+    })
+    .catch(error => {
+      console.log('Error al obtener favoritos:', error);
+      res.status(500).json({ error: 'Error al obtener favoritos' });
+    });
 });
 
 app.post('/agregarFavorito', (req, res) => {
   const nuevoFavorito = new Favorito({
-      id: req.body.id,
-      idUsuario: req.body.idUsuario,
-      idAlojamiento: req.body.idAlojamiento
+    id: req.body.id,
+    idUsuario: req.body.idUsuario,
+    idAlojamiento: req.body.idAlojamiento
   });
 
   nuevoFavorito.save()
-      .then(favorito => {
-          res.json(favorito);
-      })
-      .catch(error => {
-          res.status(500).send(error);
-      });
+    .then(favorito => {
+      res.json(favorito);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    });
 });
 
 app.delete('/eliminarFavorito/:id', (req, res) => {
   Favorito.deleteOne({ id: req.params.id })
-        .then(result => {
-            if(result.deletedCount === 0){
-                res.status(404).json({ message: 'Favorito no encontrado con el id proporcionado' });
-            } else {
-                res.json({ message: 'Favorito eliminado con éxito' });
-            }
-        })
-        .catch(error => {
-            res.status(500).json({ error: 'Ocurrió un error al eliminar el favorito' });
-        });
+    .then(result => {
+      if (result.deletedCount === 0) {
+        res.status(404).json({ message: 'Favorito no encontrado con el id proporcionado' });
+      } else {
+        res.json({ message: 'Favorito eliminado con éxito' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'Ocurrió un error al eliminar el favorito' });
+    });
 });
 
 app.post('/addCard/:username', async (req, res) => {
   const { username } = req.params;
   const { card } = req.body;
   try {
-      // Busca al usuario en la base de datos
-      const user = await Usuario.findOne({ nombre_usuario: username });
-      if (!user) {
-          return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-      // Añade la tarjeta al cliente de Stripe
-      const source = await stripe.customers.createSource(user.stripeCustomerId, { source: card });
-      res.json(source);
+    // Busca al usuario en la base de datos
+    const user = await Usuario.findOne({ nombre_usuario: username });
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    // Añade la tarjeta al cliente de Stripe
+    const source = await stripe.customers.createSource(user.stripeCustomerId, { source: card });
+    res.json(source);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
 app.get('/cards/:username', async (req, res) => {
   const { username } = req.params;
   try {
-      // Busca al usuario en la base de datos
-      const user = await Usuario.findOne({ nombre_usuario: username });
-      if (!user) {
-          return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-      // Obtiene las tarjetas del cliente de Stripe
-      const cards = await stripe.customers.listSources(user.stripeCustomerId, { object: 'card', limit: 3 });
-      res.json(cards);
+    // Busca al usuario en la base de datos
+    const user = await Usuario.findOne({ nombre_usuario: username });
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    // Obtiene las tarjetas del cliente de Stripe
+    const cards = await stripe.customers.listSources(user.stripeCustomerId, { object: 'card', limit: 3 });
+    res.json(cards);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -268,19 +275,19 @@ app.delete('/deleteCard/:username/:cardId', async (req, res) => {
   const { username, cardId } = req.params;
 
   try {
-      // Busca al usuario en la base de datos
-      const user = await Usuario.findOne({ nombre_usuario: username });
-      if (!user) {
-          return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-      // Elimina la tarjeta del cliente de Stripe
-      const card = await stripe.customers.deleteSource(
-          user.stripeCustomerId,
-          cardId
-      );
-      res.json(card);
+    // Busca al usuario en la base de datos
+    const user = await Usuario.findOne({ nombre_usuario: username });
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    // Elimina la tarjeta del cliente de Stripe
+    const card = await stripe.customers.deleteSource(
+      user.stripeCustomerId,
+      cardId
+    );
+    res.json(card);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
