@@ -37,13 +37,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/usuarios', async (req, res) => {
-  const { nombre_usuario, contrasenia } = req.body;
+  const { correo, contrasenia } = req.body;
   try {
    
-    if(!nombre_usuario.trim() || !contrasenia.trim()){
+    if(!correo.trim() || !contrasenia.trim()){
       return res.status(400).json({ error: 'Error falta el Usuario o Contraseña ' });
     }
-    const usuario = await Usuario.findOne({nombre_usuario});
+    const usuario = await Usuario.findOne({correo});
     
     if(!usuario){
       return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -52,8 +52,8 @@ app.post('/usuarios', async (req, res) => {
     if(!contrasenia_adecuada){
       return res.status(404).json({ error: 'Contraseña Incorrecta' });
     }
-    const token=jwt.sign({usuariorId:usuario._id},process.env.jwt_secreto,{expiresIn:'1d'})
-    res.json({success:true,usuario:{nombre:usuario.nombre,correo:usuario.correo,id:usuario._id,stripeCustomerId:usuario.stripeCustomerId,token}});
+    const token=jwt.sign({correoUsuario:usuario.correo},process.env.jwt_secreto,{expiresIn:'1d'})
+    res.json({success:true,usuario:{nombre:usuario.nombre,nombre_usuario:usuario.nombre_usuario,correo:usuario.correo,id:usuario._id,stripeCustomerId:usuario.stripeCustomerId,token}});
   } catch (error) {
     console.log('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });

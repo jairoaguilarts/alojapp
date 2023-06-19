@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 1,
   },
   logo: {
     width: 200,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 30,
     color: '#eaeaf2',
-    width: '99%',
+    paddingHorizontal: 20,
   },
   buttonContainer: {
     alignItems: 'center',

@@ -1,10 +1,51 @@
-import React from 'react';
-import { View, Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React ,{useState}from 'react';
+import { View, Alert,Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { FIREBASE_auth } from '../FirebaseConfig';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from 'axios';
 
 const InicioSesion = () => {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
   const auth =FIREBASE_auth;
+
+  const [nombre_usuario, setNombre_usuario] = useState<string>('');
+  const [contrasenia, setContrasenia] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const handleUsuarioCambio=(text:string)=>{
+    setNombre_usuario(text);
+  };
+  const handleContraseniaCambio=(text:string)=>{
+    setContrasenia(text);
+  };
+
+  const handleInciarSession= async ()=>{
+  
+      setLoading(true);
+      try{
+        const responde= await signInWithEmailAndPassword(FIREBASE_auth,nombre_usuario,contrasenia)
+        Alert.alert('Inicio de sesión exitoso');
+        if(responde){
+          try{
+            const response = await axios.post('http://localhost:3000/usuarios',{
+              nombre_usuario:nombre_usuario,
+              contrasenia:contrasenia,
+            });
+            Alert.alert('Inicio de sesión exitoso');
+            console.log(response.data);
+          }catch(error){
+            console.log(error);
+            Alert.alert('Inicio de sesión fallido dentro del server');
+          }
+        }
+      }catch(error){
+        console.log(error);
+        Alert.alert('Inicio de sesión fallido')
+      } finally{
+        setLoading(false);
+      }
+  
+    
+  };
   const renderLogo = () => {
     if (logoImage) {
       return (
@@ -30,11 +71,19 @@ const InicioSesion = () => {
           <Text style={styles.heading}>Inicio de sesión</Text>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Usuario" placeholderTextColor="#fff" />
+            <TextInput style={styles.input} 
+            placeholder="Usuario" placeholderTextColor="#fff" 
+            value={nombre_usuario}
+            onChangeText={handleUsuarioCambio}
+            />
           </View>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Contraseña"  placeholderTextColor="#fff" secureTextEntry={true} />
+            <TextInput style={styles.input} placeholder="Contraseña"  placeholderTextColor="#fff" 
+            secureTextEntry={true}
+            value={contrasenia}
+            onChangeText={handleContraseniaCambio}
+            />
           </View>
 
           <TouchableOpacity style={styles.forgotPasswordLink}>
@@ -42,7 +91,9 @@ const InicioSesion = () => {
           </TouchableOpacity>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => {/* Agregar lógica para iniciar sesión */}}>
+            <TouchableOpacity style={styles.button} onPress={ 
+              handleInciarSession
+            }>
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
           </View>
