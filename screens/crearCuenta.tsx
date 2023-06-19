@@ -8,13 +8,13 @@ import { NavigationProp } from '@react-navigation/native';
 type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
-  CrearCuenta1: undefined;
-  CrearCuenta2: undefined;
+  CrearCuenta: undefined;
+  HomePage: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
 type CrearProps = {
-  navigation: NavigationProp<RootStackParamList, 'CrearCuenta1'>;
+  navigation: NavigationProp<RootStackParamList, 'CrearCuenta'>;
 };
 
 
@@ -128,7 +128,7 @@ const CrearCuenta: React.FC<CrearProps> = ({ navigation }) => {
               </View>
 
               <TouchableOpacity style={styles.forgotPasswordLink}>
-                <Text style={styles.forgotPasswordText}>Inicia sesión</Text>
+                <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate('InicioSesion')}>Inicia sesión</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -192,8 +192,8 @@ const CrearCuenta: React.FC<CrearProps> = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.forgotPasswordLink}>
-                <Text style={styles.forgotPasswordText}>Inicia sesión</Text>
+              <TouchableOpacity style={styles.forgotPasswordLink} onPress={() => navigation.navigate('InicioSesion')}>
+                <Text style={styles.forgotPasswordText }>Inicia sesión</Text>
               </TouchableOpacity>
             </View>
           </>

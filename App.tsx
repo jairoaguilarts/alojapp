@@ -7,11 +7,16 @@
 
 import mongoose from 'mongoose';
 import React from 'react';
-import Inicio from './screens/inicio';
-import InicioSesion from './screens/inicio_sesion';
 import type {PropsWithChildren} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Screens
+import Inicio from './screens/inicio';
+import InicioSesion from './screens/inicioSesion';
+import CrearCuenta from './screens/crearCuenta';
+import HomePage from './screens/homePage';
+
 
 
 
@@ -34,7 +39,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import CrearCuenta from './screens/crear_cuenta';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -80,7 +84,8 @@ function App(): JSX.Element {
       <Stack.Navigator>
         <Stack.Screen name="Inicio" component={Inicio} />
         <Stack.Screen name="InicioSesion" component={InicioSesion} />
-        <Stack.Screen name="CrearCuenta1" component={CrearCuenta} />
+        <Stack.Screen name="CrearCuenta" component={CrearCuenta} />
+        <Stack.Screen name="HomePage" component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -7,10 +7,11 @@ import { NavigationProp } from '@react-navigation/native';
 type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
-  CrearCuenta1: undefined;
-  CrearCuenta2: undefined;
+  CrearCuenta: undefined;
+  HomePage: undefined;
   // Agrega otras rutas aquí si es necesario
 };
+
 type InicioProps = {
   navigation: NavigationProp<RootStackParamList, 'Inicio'>;
 };
@@ -49,7 +50,7 @@ const Inicio: React.FC<InicioProps> =  ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CrearCuenta1')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CrearCuenta')}>
           <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
