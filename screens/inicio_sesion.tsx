@@ -1,12 +1,12 @@
 import React ,{useState}from 'react';
 import { View, Alert,Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { FIREBASE_auth } from '../FirebaseConfig';
-import { signInWithEmailAndPassword } from "firebase/auth";
+// import { FIREBASE_auth } from '../FirebaseConfig'; va al back
+// import { signInWithEmailAndPassword } from "firebase/auth"; va al back
 import axios from 'axios';
 
 const InicioSesion = () => {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
-  const auth =FIREBASE_auth;
+  // const auth =FIREBASE_auth; esto va en el back
 
   const [nombre_usuario, setNombre_usuario] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
@@ -22,9 +22,10 @@ const InicioSesion = () => {
   
       setLoading(true);
       try{
-        const responde= await signInWithEmailAndPassword(FIREBASE_auth,nombre_usuario,contrasenia)
+        // const responde= await signInWithEmailAndPassword(FIREBASE_auth,nombre_usuario,contrasenia)
         Alert.alert('Inicio de sesión exitoso');
-        if(responde){
+        // Hay que hacer las peticiones al back
+        /* if(responde){
           try{
             const response = await axios.post('http://localhost:3000/usuarios',{
               nombre_usuario:nombre_usuario,
@@ -36,7 +37,7 @@ const InicioSesion = () => {
             console.log(error);
             Alert.alert('Inicio de sesión fallido dentro del server');
           }
-        }
+        } */
       }catch(error){
         console.log(error);
         Alert.alert('Inicio de sesión fallido')

@@ -1,17 +1,24 @@
+require('dotenv').config({ path: './configDB/credentials.env' });
 const express = require('express');
-const app = express();
-const port = 3000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const stripe = require('stripe')('sk_test_51NJS8vHe3t6WjAoJtlqFxm85wkNciUnjj9qHGSrhS6XbXpZ3gw1rQ4tkhCC0661pZhF9Clz46rroAWCF4b1xSqHg00RnEKefvP');
 const jwt = require('jsonwebtoken');
+const { initializeApp } = require('firebase/app');
+const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } = require('firebase/auth');
+const { firebaseConfig, mongoUri } = require('./configDB/config');
+
+const app = express();
+const appFirebase = initializeApp(firebaseConfig);
+const port = 3000;
+
+// Schemas
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
 const Propiedad = require("./schemas/propiedades");
 const Detalles_Propiedad = require("./schemas/detalles_propiedad");
-require('dotenv').config();
-const MongoUri = "mongodb+srv://GrupoUX:ProyectoUX2023@cluster0.4nq8gyr.mongodb.net/?retryWrites=true&w=majority";
-mongoose.connect(MongoUri, { 
+
+mongoose.connect(mongoUri, { 
   useNewUrlParser: true,
   useUnifiedTopology: true,
   // useCreateIndex: true, da error
