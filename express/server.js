@@ -92,7 +92,7 @@ app.get('/logOut', (req, res) => {
 });
 
 app.post('/agregarUsuario', async (req, res) => {
-  const { id, nombre, nombre_usuario, contrasenia, correo } = req.body;
+  const { nombre, nombre_usuario, contrasenia, correo } = req.body;
   try {
     // Comprueba si ya existe un usuario con el mismo nombre de usuario
     const usuarioExistente = await Usuario.findOne({
@@ -111,7 +111,7 @@ app.post('/agregarUsuario', async (req, res) => {
       return res.status(400).json({ error: errorMessage });
     }
 
-    const nuevoUsuario = new Usuario({ id, nombre, nombre_usuario, contrasenia, correo });
+    const nuevoUsuario = new Usuario({ nombre, nombre_usuario, contrasenia, correo });
 
     // Crea un nuevo cliente en Stripe
     const customer = await stripe.customers.create({ email: correo });
@@ -130,6 +130,7 @@ app.post('/agregarUsuario', async (req, res) => {
     }
 
     await nuevoUsuario.save();
+    console.log('Usuario creado');
     res.json(nuevoUsuario);
   } catch (error) {
     console.log('Error al agregar usuario:', error);

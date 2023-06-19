@@ -8,15 +8,16 @@ const InicioSesion = () => {
   const [nombre_usuario, setNombre_usuario] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
   const [loading, setLoading] = useState(false);
+
   const handleUsuarioCambio = (text: string) => {
     setNombre_usuario(text);
   };
+
   const handleContraseniaCambio = (text: string) => {
     setContrasenia(text);
   };
 
   const handleInciarSession = async () => {
-
     setLoading(true);
     try {
       // Datos de inicio de sesión del usuario
@@ -52,9 +53,8 @@ const InicioSesion = () => {
     } finally {
       setLoading(false);
     }
-
-
   };
+
   const renderLogo = () => {
     if (logoImage) {
       return (
@@ -70,6 +70,7 @@ const InicioSesion = () => {
       );
     }
   };
+  
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
