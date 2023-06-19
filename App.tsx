@@ -15,7 +15,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Inicio from './screens/inicio';
 import InicioSesion from './screens/inicioSesion';
 import CrearCuenta from './screens/crearCuenta';
-import HomePage from './screens/homePage';
 
 
 
@@ -85,7 +84,6 @@ function App(): JSX.Element {
         <Stack.Screen name="Inicio" component={Inicio} />
         <Stack.Screen name="InicioSesion" component={InicioSesion} />
         <Stack.Screen name="CrearCuenta" component={CrearCuenta} />
-        <Stack.Screen name="HomePage" component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

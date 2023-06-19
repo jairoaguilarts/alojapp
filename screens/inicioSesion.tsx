@@ -6,7 +6,6 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
@@ -52,7 +51,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
           if (data.success) {
             let firebaseUID = data.firebaseUID;
             console.log('Usuario autenticado correctamente: ', data.usuario);
-            navigation.navigate('HomePage');
+            //navigation.navigate('HomePage');
           } else {
             console.error('Error durante el inicio de sesión: ', data.error);
           }
