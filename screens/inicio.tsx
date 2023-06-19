@@ -8,7 +8,6 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 

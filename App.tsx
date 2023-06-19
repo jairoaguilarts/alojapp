@@ -10,39 +10,20 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, Image } from 'react-native';
+import { Colors, DebugInstructions, Header, LearnMoreLinks, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 // Screens
 import Inicio from './screens/inicio';
 import InicioSesion from './screens/inicioSesion';
 import CrearCuenta from './screens/crearCuenta';
-
-
-
+import HomePage from './screens/homePage';
 
 const Stack = createNativeStackNavigator();
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Image,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
-
 
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -84,6 +65,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Inicio" component={Inicio} />
         <Stack.Screen name="InicioSesion" component={InicioSesion} />
         <Stack.Screen name="CrearCuenta" component={CrearCuenta} />
+        <Stack.Screen name="HomePage" component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
