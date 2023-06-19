@@ -198,7 +198,7 @@ app.post('/agregarDetallesPropiedades', (req, res) => {
 });
 
 app.get('/favoritos', (req, res) => {
-  Favorito.find({})
+  Favorito.find({uidUsuario: req.body.uidUsuario})
     .then(favoritos => {
       res.json(favoritos);
     })
@@ -211,7 +211,7 @@ app.get('/favoritos', (req, res) => {
 app.post('/agregarFavorito', (req, res) => {
   const nuevoFavorito = new Favorito({
     id: req.body.id,
-    idUsuario: req.body.idUsuario,
+    uidUsuario: req.body.uidUsuario,
     idAlojamiento: req.body.idAlojamiento
   });
 
@@ -224,16 +224,19 @@ app.post('/agregarFavorito', (req, res) => {
     });
 });
 
-app.delete('/eliminarFavorito/:id', (req, res) => {
-  Favorito.deleteOne({ id: req.params.id })
+app.delete('/eliminarFavorito', (req, res) => {
+  const { uidUsuario, idAlojamiento } = req.body;
+
+  Favorito.deleteOne({ uidUsuario: uidUsuario, idAlojamiento: idAlojamiento })
     .then(result => {
       if (result.deletedCount === 0) {
-        res.status(404).json({ message: 'Favorito no encontrado con el id proporcionado' });
+        res.status(404).json({ message: 'Favorito no encontrado con el uidUsuario y idAlojamiento proporcionados' });
       } else {
         res.json({ message: 'Favorito eliminado con éxito' });
       }
     })
     .catch(error => {
+      console.log('Error al eliminar favorito:', error);
       res.status(500).json({ error: 'Ocurrió un error al eliminar el favorito' });
     });
 });
