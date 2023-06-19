@@ -1,5 +1,5 @@
-import React ,{useState}from 'react';
-import { View, Alert,Text,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Alert, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 // import { FIREBASE_auth } from '../FirebaseConfig'; va al back
 // import { signInWithEmailAndPassword } from "firebase/auth"; va al back
 import axios from 'axios';
@@ -11,41 +11,52 @@ const InicioSesion = () => {
   const [nombre_usuario, setNombre_usuario] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
   const [loading, setLoading] = useState(false);
-  const handleUsuarioCambio=(text:string)=>{
+  const handleUsuarioCambio = (text: string) => {
     setNombre_usuario(text);
   };
-  const handleContraseniaCambio=(text:string)=>{
+  const handleContraseniaCambio = (text: string) => {
     setContrasenia(text);
   };
 
-  const handleInciarSession= async ()=>{
-  
-      setLoading(true);
-      try{
-        // const responde= await signInWithEmailAndPassword(FIREBASE_auth,nombre_usuario,contrasenia)
-        Alert.alert('Inicio de sesión exitoso');
-        // Hay que hacer las peticiones al back
-        /* if(responde){
-          try{
-            const response = await axios.post('http://localhost:3000/usuarios',{
-              nombre_usuario:nombre_usuario,
-              contrasenia:contrasenia,
-            });
-            Alert.alert('Inicio de sesión exitoso');
-            console.log(response.data);
-          }catch(error){
-            console.log(error);
-            Alert.alert('Inicio de sesión fallido dentro del server');
+  const handleInciarSession = async () => {
+
+    setLoading(true);
+    try {
+      // Datos de inicio de sesión del usuario
+      const userData = {
+        correo: nombre_usuario,
+        contrasenia: contrasenia,
+      };
+
+      // Realizar la petición POST
+      fetch('http://10.0.2.2:3000/logIn', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log('Usuario autenticado correctamente: ', data.usuario);
+          } else {
+            console.error('Error durante el inicio de sesión: ', data.error);
           }
-        } */
-      }catch(error){
-        console.log(error);
-        Alert.alert('Inicio de sesión fallido')
-      } finally{
-        setLoading(false);
-      }
-  
-    
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Inicio de sesión fallido')
+    } finally {
+      setLoading(false);
+    }
+
+
   };
   const renderLogo = () => {
     if (logoImage) {
@@ -72,18 +83,18 @@ const InicioSesion = () => {
           <Text style={styles.heading}>Inicio de sesión</Text>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} 
-            placeholder="Usuario" placeholderTextColor="#fff" 
-            value={nombre_usuario}
-            onChangeText={handleUsuarioCambio}
+            <TextInput style={styles.input}
+              placeholder="Usuario" placeholderTextColor="#fff"
+              value={nombre_usuario}
+              onChangeText={handleUsuarioCambio}
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder="Contraseña"  placeholderTextColor="#fff" 
-            secureTextEntry={true}
-            value={contrasenia}
-            onChangeText={handleContraseniaCambio}
+            <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor="#fff"
+              secureTextEntry={true}
+              value={contrasenia}
+              onChangeText={handleContraseniaCambio}
             />
           </View>
 
@@ -92,7 +103,7 @@ const InicioSesion = () => {
           </TouchableOpacity>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={ 
+            <TouchableOpacity style={styles.button} onPress={
               handleInciarSession
             }>
               <Text style={styles.buttonText}>Iniciar sesión</Text>
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#181c2c',
     color: '#eaeaf2',
     textAlign: 'center',
-    
+
   },
   logoContainer: {
     alignItems: 'center',
@@ -183,7 +194,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
-    
+
   },
   createAccountLink: {
     alignSelf: 'center',
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#fff',
   },
-  
+
 });
 
 export default InicioSesion;
