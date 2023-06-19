@@ -19,6 +19,14 @@ const UsuariosSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    fecha_nacimiento: {  
+        type: Date,
+        required: false,  
+    },
+    numero_telefono: {   
+        type: String,
+        required: false, 
+    },
     imagen: Buffer, 
     stripeCustomerId: String,  // ID del cliente de Stripe
     firebaseUID: String // UID de firebase
