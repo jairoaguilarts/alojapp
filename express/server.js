@@ -2,7 +2,7 @@ require('dotenv').config({ path: './configDB/credentials.env' });
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const stripe = require('stripe')('sk_test_51NJS8vHe3t6WjAoJtlqFxm85wkNciUnjj9qHGSrhS6XbXpZ3gw1rQ4tkhCC0661pZhF9Clz46rroAWCF4b1xSqHg00RnEKefvP');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const jwt = require('jsonwebtoken');
 const { initializeApp } = require('firebase/app');
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } = require('firebase/auth');
@@ -20,8 +20,7 @@ const Detalles_Propiedad = require("./schemas/detalles_propiedad");
 
 mongoose.connect(mongoUri, { 
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  // useCreateIndex: true, da error
+  useUnifiedTopology: true
 });
 
 mongoose.connection.once('open', () => {
@@ -30,14 +29,6 @@ mongoose.connection.once('open', () => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.use((req,res,next) => {
-//   req.on('data', (chunk) => {
-//       const data = JSON.parse(chunk);
-//       req.body = data;
-//       next();
-//   });
-//   });
 
 app.get('/', (req, res) => {
   res.send('Conexion establecida');
