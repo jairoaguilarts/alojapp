@@ -12,6 +12,9 @@ const app = express();
 const appFirebase = initializeApp(firebaseConfig);
 const port = 3000;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Schemas
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
@@ -27,31 +30,51 @@ mongoose.connection.once('open', () => {
   console.log("Conectado a mongo")
 })
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.get('/', (req, res) => {
   res.send('Conexion establecida');
 });
 
-app.post('/usuarios', async (req, res) => {
+app.post('/logIn', async (req, res) => {
   const { correo, contrasenia } = req.body;
   try {
-   
     if(!correo.trim() || !contrasenia.trim()){
       return res.status(400).json({ error: 'Error falta el Usuario o Contraseña ' });
     }
-    const usuario = await Usuario.findOne({correo});
+    const auth = getAuth();
+    let firebaseUID = '';
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, correo, contrasenia);
+        const user = userCredential.user;
+        firebaseUID = user.uid;
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return res.status(500).send({
+            "msg": "Credenciales incorrectas"
+        });
+    }
+
+    const usuario = await Usuario.findOne({firebaseUID});
     
     if(!usuario){
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
-    const contrasenia_adecuada=usuario.CompararContrasenia(contrasenia)
+    const contrasenia_adecuada = usuario.CompararContrasenia(contrasenia);
     if(!contrasenia_adecuada){
       return res.status(404).json({ error: 'Contraseña Incorrecta' });
     }
-    const token=jwt.sign({correoUsuario:usuario.correo},process.env.jwt_secreto,{expiresIn:'1d'})
-    res.json({success:true,usuario:{nombre:usuario.nombre,nombre_usuario:usuario.nombre_usuario,correo:usuario.correo,id:usuario._id,stripeCustomerId:usuario.stripeCustomerId,token}});
+    res.json(
+      {
+        success: true,
+        usuario: {
+          nombre: usuario.nombre,
+          nombre_usuario: usuario.nombre_usuario,
+          correo: usuario.correo,
+          id: usuario._id,
+          stripeCustomerId: usuario.stripeCustomerId, 
+          firebaseUID: usuario.firebaseUID
+        }
+      });
   } catch (error) {
     console.log('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });
@@ -69,18 +92,33 @@ app.post('/agregarUsuario', async (req, res) => {
       ]
     });
     if (usuarioExistente) {
-      let errorMensaje = '';
+      let errorMessage = '';
       if (usuarioExistente.nombre_usuario === nombre_usuario) {
-        errorMensaje = 'Ya existe un usuario con ese nombre de usuario';
+        errorMessage = 'Ya existe un usuario con ese nombre de usuario';
       } else {
-        errorMensaje = 'Ya existe un usuario con ese correo electrónico, porfavor Inicia Sesion';
+        errorMessage = 'Ya existe un usuario con ese correo electrónico, por favor Inicia Sesion';
       }
-      return res.status(400).json({ error: errorMensaje });
+      return res.status(400).json({ error: errorMessage });
     }
+
     const nuevoUsuario = new Usuario({ id, nombre, nombre_usuario, contrasenia, correo });
+
     // Crea un nuevo cliente en Stripe
     const customer = await stripe.customers.create({ email: correo });
     nuevoUsuario.stripeCustomerId = customer.id;
+
+    // Crea el usuario en firebase
+    const auth = getAuth();
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasenia);
+        const user = userCredential.user;
+        nuevoUsuario.firebaseUID = user.uid;
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return res.status(500).send("El usuario no pudo ser creado en firebase");
+    }
+
     await nuevoUsuario.save();
     res.json(nuevoUsuario);
   } catch (error) {
@@ -88,8 +126,6 @@ app.post('/agregarUsuario', async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
-
-
 
 app.get('/propiedades', (req, res) => {
   Propiedad.find({}, (error, propiedades) => {

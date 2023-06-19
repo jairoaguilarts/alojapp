@@ -20,7 +20,8 @@ const UsuariosSchema = new mongoose.Schema({
         required: true,
     },
     imagen: Buffer, 
-    stripeCustomerId: String  // ID del cliente de Stripe
+    stripeCustomerId: String,  // ID del cliente de Stripe
+    firebaseUID: String // UID de firebase
 });     
 
 UsuariosSchema.methods.CompararContrasenia = async function (contrasenia) {
