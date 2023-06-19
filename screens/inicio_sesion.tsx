@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-// import { FIREBASE_auth } from '../FirebaseConfig'; va al back
-// import { signInWithEmailAndPassword } from "firebase/auth"; va al back
 import axios from 'axios';
 
 const InicioSesion = () => {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
-  // const auth =FIREBASE_auth; esto va en el back
 
   const [nombre_usuario, setNombre_usuario] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
