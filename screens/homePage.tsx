@@ -79,23 +79,6 @@ function FavoritosScreen() {
     );
 }
 
-
-function RentadosScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Rentados!</Text>
-        </View>
-    );
-}
-
-function AsistenciaScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Asistencia!</Text>
-        </View>
-    );
-}
-
 function PerfilScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -131,8 +114,6 @@ const HomePage: React.FC<HomeProps> = ({ navigation,route }) => {
         >   
             <Tab.Screen name="Home">{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
             <Tab.Screen name="Favoritos" component={FavoritosScreen} />
-            <Tab.Screen name="Rentados" component={RentadosScreen} />
-            <Tab.Screen name="Asistencia" component={AsistenciaScreen} />
             <Tab.Screen name="Perfil" component={PerfilScreen} />
         </Tab.Navigator>
     );
