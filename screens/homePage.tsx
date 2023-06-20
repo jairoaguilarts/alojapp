@@ -16,10 +16,11 @@ type HomeProps = {
     route: RouteProp<RootStackParamList, 'HomePage'>;
 };
 
-function HomeScreen() {
+function HomeScreen(props: { nombreUsuario: string }) {
+    const { nombreUsuario } = props;
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>HomePage</Text>
+          <Text>{nombreUsuario}</Text>
         </View>
       );
 }
@@ -80,8 +81,8 @@ const HomePage: React.FC<HomeProps> = ({ navigation,route }) => {
                 activeTintColor: 'tomato',
                 inactiveTintColor: 'gray',
             })}
-        >
-            <Tab.Screen name="Home" component={HomeScreen} />
+        >   
+            <Tab.Screen name="Home">{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
             <Tab.Screen name="Favoritos" component={FavoritosScreen} />
             <Tab.Screen name="Rentados" component={RentadosScreen} />
             <Tab.Screen name="Asistencia" component={AsistenciaScreen} />
