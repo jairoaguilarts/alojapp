@@ -8,7 +8,7 @@ const firebaseConfig = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = String(process.env.MONGO_URI);
 
 module.exports = {
     firebaseConfig,
