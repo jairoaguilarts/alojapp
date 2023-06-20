@@ -18,9 +18,9 @@ const Tab = createBottomTabNavigator();
 
 const HomePage: React.FC<HomeProps> = ({ navigation }) => {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="HomePage" component={HomePage} />
-        </Tab.Navigator>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text>Home Page</Text>
+        </View>
     );
 };
 
