@@ -31,10 +31,5 @@ const UsuariosSchema = new mongoose.Schema({
     firebaseUID: String // UID de firebase
 });     
 
-UsuariosSchema.methods.CompararContrasenia = async function (contrasenia) {
-    const resultado = await bcrypt.compareSync(contrasenia, this.contrasenia);
-    return resultado;
-}
-
 const usuario = mongoose.model('usuario', UsuariosSchema);
 module.exports = usuario;

@@ -54,10 +54,6 @@ app.post('/logIn', async (req, res) => {
     if (!usuario) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
-    const contrasenia_adecuada = usuario.CompararContrasenia(contrasenia);
-    if (!contrasenia_adecuada) {
-      return res.status(404).json({ error: 'Contraseña Incorrecta' });
-    }
     res.json({
       success: true,
       usuario: {
