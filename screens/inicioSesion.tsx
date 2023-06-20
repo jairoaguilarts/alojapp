@@ -6,7 +6,7 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: undefined;
+  HomePage: { nombreUsuario: string } | undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
@@ -18,6 +18,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
 
   const [nombre_usuario, setNombre_usuario] = useState<string>('');
+  const [nombre, setNombre] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
@@ -51,8 +52,10 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
         .then(data => {
           if (data.success) {
             let firebaseUID = data.firebaseUID;
+          
             console.log('Usuario autenticado correctamente: ', data.usuario);
-            navigation.navigate('HomePage');
+            setNombre(data.usuario.nombre);
+            navigation.navigate('HomePage', { nombreUsuario: data.usuario.nombre as string });
           } else {
             console.error('Error durante el inicio de sesión: ', data.error);
           }
@@ -96,7 +99,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
 
           <View style={styles.inputContainer}>
             <TextInput style={styles.input}
-              placeholder="Usuario" placeholderTextColor="#fff"
+              placeholder="Correo electronico" placeholderTextColor="#fff"
               value={nombre_usuario}
               onChangeText={handleUsuarioCambio}
             />
@@ -225,3 +228,4 @@ const styles = StyleSheet.create({
 });
 
 export default InicioSesion;
+
