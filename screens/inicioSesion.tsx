@@ -12,6 +12,7 @@ type RootStackParamList = {
 
 type InicioProps = {
   navigation: NavigationProp<RootStackParamList, 'InicioSesion'>;
+  
 };
 
 const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {

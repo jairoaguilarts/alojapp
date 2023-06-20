@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View, Image} from 'react-native';
+import { Text, View, Image ,StyleSheet,} from 'react-native';
 import { NavigationProp,RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 
 type RootStackParamList = {
     Inicio: undefined;
@@ -12,18 +14,62 @@ type RootStackParamList = {
 };
 
 type HomeProps = {
-    navigation: NavigationProp<RootStackParamList, 'HomePage'>;
+    navigation: StackNavigationProp<RootStackParamList, 'HomePage'>;
     route: RouteProp<RootStackParamList, 'HomePage'>;
 };
 
 function HomeScreen(props: { nombreUsuario: string }) {
     const { nombreUsuario } = props;
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>{nombreUsuario}</Text>
+        
+        <View style={styles.container}>
+        <View style={styles.topBackground} />
+        <View style={styles.textContainer}>
+          <Text style={styles.welcomeText}>Bienvenido</Text>
+          <Text style={styles.nameText}>{nombreUsuario}</Text>
         </View>
+      </View>
+
       );
+      
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        backgroundColor: '#2D3652',
+      },
+      textContainer: {
+        justifyContent: 'center',
+        marginTop: 10,
+      },
+      welcomeText: {
+        color: 'white',
+        paddingLeft: 150,
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      nameText: {
+        flex: 1,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 40,
+        textAlign: 'left',
+      },
+      topBackground: {
+        position: 'absolute',
+        top: 0,
+        width: '100%',
+        height: "35%",
+        backgroundColor: "#495C83",
+      },
+      
+    });
+  
 
 function FavoritosScreen() {
     return (
@@ -32,6 +78,7 @@ function FavoritosScreen() {
         </View>
     );
 }
+
 
 function RentadosScreen() {
     return (
@@ -90,5 +137,6 @@ const HomePage: React.FC<HomeProps> = ({ navigation,route }) => {
         </Tab.Navigator>
     );
 };
+
 
 export default HomePage;
