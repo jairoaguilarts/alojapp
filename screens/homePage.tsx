@@ -477,6 +477,8 @@ function HomeScreen() {
       
 }
 const styles = StyleSheet.create({
+    
+    
     frameParentPosition: {
       left: 30,
       position: "absolute",
@@ -528,21 +530,6 @@ const styles = StyleSheet.create({
       width: 69,
       height: 80,
       top: 0,
-      position: "absolute",
-      overflow: "hidden",
-    },
-    outlineParentPosition: {
-      bottom: "17.5%",
-      top: "18.75%",
-      height: "63.75%",
-      position: "absolute",
-    },
-    outlineLayout: {
-      maxHeight: "100%",
-      maxWidth: "100%",
-      bottom: "52.94%",
-      top: "0%",
-      height: "47.06%",
       position: "absolute",
       overflow: "hidden",
     },
@@ -723,11 +710,7 @@ const styles = StyleSheet.create({
     frameParent3: {
       top: 657,
     },
-    heart24Outline: {
-      width: "41.38%",
-      right: "29.31%",
-      left: "29.31%",
-    },
+
     favoritos: {
       color: Color.mainAccent,
     },
@@ -740,11 +723,6 @@ const styles = StyleSheet.create({
       left: 100,
       opacity: 0.7,
     },
-    house24Outline: {
-      width: "70.59%",
-      right: "14.71%",
-      left: "14.71%",
-    },
     inicio: {
       color: Color.mainText,
     },
@@ -752,19 +730,6 @@ const styles = StyleSheet.create({
       width: "49.28%",
       right: "24.64%",
       left: "26.09%",
-    },
-    tabBarChild: {
-      left: 21,
-    },
-    building24Outline: {
-      width: "40%",
-      right: "30%",
-      left: "30%",
-    },
-    building24OutlineParent: {
-      width: "85.71%",
-      right: "7.14%",
-      left: "7.14%",
     },
     tabBarInner1: {
       left: 179,
@@ -830,15 +795,287 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       paddingVertical: 10,
     },
+
+    favoritosVaco: {
+        backgroundColor: Color.mainBackground,
+        flex: 1,
+        width: "100%",
+        height: 926,
+        overflow: "hidden",
+      },
+
+      outlineParentPosition: {
+        bottom: "17.5%",
+        top: "18.75%",
+        height: "63.75%",
+        position: "absolute",
+      },
+      outlineLayout: {
+        maxHeight: "100%",
+        maxWidth: "100%",
+        bottom: "52.94%",
+        top: "0%",
+        height: "47.06%",
+        position: "absolute",
+        overflow: "hidden",
+      },
+      inicioTypoF: {
+        fontSize: FontSize.labelL1_size,
+        left: 0,
+        top: 34,
+        textAlign: "center",
+        fontFamily: FontFamily.titleT2,
+        position: "absolute",
+      },
+      tabLayout: {
+        opacity: 0.7,
+        width: 69,
+        top: 0,
+        height: 80,
+        position: "absolute",
+        overflow: "hidden",
+      },
+      frameViewLayout: {
+        width: 70,
+        opacity: 0.7,
+        top: 0,
+        height: 80,
+        position: "absolute",
+        overflow: "hidden",
+      },
+      navegaPorLaFlexBox: {
+        justifyContent: "center",
+        alignItems: "flex-end",
+        display: "flex",
+        fontSize: FontSize.titleT2_size,
+        textAlign: "center",
+        color: Color.mainText,
+        fontFamily: FontFamily.titleT2,
+      },
+      favoritosF: {
+        top: 60,
+        left: 30,
+        fontSize: FontSize.headlineH4_size,
+        width: 368,
+        textAlign: "center",
+        fontFamily: FontFamily.titleT2,
+        position: "absolute",
+        color: Color.mainText,
+      },
+      heart24Outline: {
+        width: "41.38%",
+        right: "29.31%",
+        left: "29.31%",
+      },
+      favoritos1: {
+        color: Color.mainText,
+        left: 0,
+        top: 34,
+      },
+      tabBarInnerF: {
+        left: 100,
+        width: 69,
+        top: 0,
+        height: 80,
+        position: "absolute",
+        overflow: "hidden",
+      },
+      house24Outline: {
+        width: "70.59%",
+        right: "14.71%",
+        left: "14.71%",
+      },
+      inicioF: {
+        color: Color.mainAccent,
+      },
+      tabBarChild: {
+        left: 21,
+      },
+      building24Outline: {
+        width: "40%",
+        right: "30%",
+        left: "30%",
+      },
+      building24OutlineParent: {
+        width: "85.71%",
+        right: "7.14%",
+        left: "7.14%",
+      },
+      frameView: {
+        left: 179,
+      },
+      support24OutlineF: {
+        width: "36.92%",
+        right: "32.31%",
+        left: "30.77%",
+      },
+      support24OutlineParentF: {
+        width: "94.2%",
+        right: "2.9%",
+        left: "2.9%",
+      },
+      tabBarInner1F: {
+        left: 259,
+      },
+      profile24OutlineF: {
+        width: "75%",
+        right: "12.5%",
+        left: "12.5%",
+      },
+      profile24OutlineParentF: {
+        width: "45.71%",
+        right: "27.14%",
+        left: "27.14%",
+      },
+      tabBarInner2F: {
+        left: 338,
+      },
+      tabBarF: {
+        marginLeft: -214,
+        bottom: 0,
+        backgroundColor: Color.mainSecondary,
+        width: 428,
+        height: 80,
+        left: "50%",
+        position: "absolute",
+        overflow: "hidden",
+      },
+      frameChild: {
+        width: 150,
+        height: 150,
+      },
+      navegaPorLa: {
+        width: 295,
+        marginTop: 30,
+      },
+      groupParent: {
+        alignItems: "center",
+        width: 368,
+      },
+      botnSecundario: {
+        width: 320,
+        height: 24,
+      },
+      btnPrimario1F: {
+        borderRadius: Border.br_xl,
+        backgroundColor: "rgba(136, 180, 245, 0.5)",
+        borderStyle: "solid",
+        borderColor: "#88b4f5",
+        borderWidth: 2,
+        height: 72,
+        flexDirection: "row",
+        padding: 24,
+        marginTop: 30,
+        overflow: "hidden",
+      },
+      frameParentF: {
+        marginTop: -205,
+        marginLeft: -184,
+        top: "50%",
+        left: "50%",
+        position: "absolute",
+      },
   
   });
   
 
 function FavoritosScreen() {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Favoritos!</Text>
+        <ScrollView>
+    <View style={styles.favoritosVaco}>
+      <Text style={styles.favoritosF}>Favoritos</Text>
+      <View style={styles.tabBarF}>
+        <View style={styles.tabBarInnerF}>
+          <View
+            style={[styles.heart24OutlineParent, styles.outlineParentPosition]}
+          >
+            <Image
+              style={[styles.heart24Outline, styles.outlineLayout]}
+              resizeMode="cover"
+              source={require("../assets/heart--24--outline.png")}
+            />
+            <Text style={[styles.favoritos1, styles.inicioTypo]}>
+              Favoritos
+            </Text>
+          </View>
         </View>
+        <View style={[styles.tabBarChild, styles.tabLayout]}>
+          <View
+            style={[styles.house24OutlineParent, styles.outlineParentPosition]}
+          >
+            <Image
+              style={[styles.house24Outline, styles.outlineLayout]}
+              resizeMode="cover"
+              source={require("../assets/house--24--outline.png")}
+            />
+            <Text style={[styles.inicioF, styles.inicioTypoF]}>Inicio</Text>
+          </View>
+        </View>
+        <View style={[styles.frameView, styles.frameViewLayout]}>
+          <View
+            style={[
+              styles.building24OutlineParent,
+              styles.outlineParentPosition,
+            ]}
+          >
+            <Image
+              style={[styles.building24Outline, styles.outlineLayout]}
+              resizeMode="cover"
+              source={require("../assets/building--24--outline2.png")}
+            />
+            <Text style={[styles.inicioF, styles.inicioTypo]}>Rentados</Text>
+          </View>
+        </View>
+        <View style={[styles.tabBarInner1F, styles.tabLayout]}>
+          <View
+            style={[
+              styles.support24OutlineParentF,
+              styles.outlineParentPosition,
+            ]}
+          >
+            <Image
+              style={[styles.support24OutlineF, styles.outlineLayout]}
+              resizeMode="cover"
+              source={require("../assets/support--24--outline2.png")}
+            />
+            <Text style={[styles.inicio, styles.inicioTypo]}>Asistencia</Text>
+          </View>
+        </View>
+        <View style={[styles.tabBarInner2F, styles.frameViewLayout]}>
+          <View
+            style={[
+              styles.profile24OutlineParentF,
+              styles.outlineParentPosition,
+            ]}
+          >
+            <Image
+              style={[styles.profile24OutlineF, styles.outlineLayout]}
+              resizeMode="cover"
+              source={require("../assets/profile--24--outline1.png")}
+            />
+            <Text style={[styles.inicio, styles.inicioTypo]}>Perfil</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.frameParentF}>
+        <View style={styles.groupParent}>
+          <Image
+            style={styles.frameChild}
+            resizeMode="cover"
+            source={require("../assets/group-713.png")}
+          />
+          <Text style={[styles.navegaPorLa, styles.navegaPorLaFlexBox]}>
+            Navega por la aplicación para encontrar tu alojamiento favorito
+          </Text>
+        </View>
+        <View style={styles.btnPrimario1F}>
+          <Text style={[styles.botnSecundario, styles.navegaPorLaFlexBox]}>
+            Buscar
+          </Text>
+        </View>
+      </View>
+    </View>
+    </ScrollView>
     );
 }
 
