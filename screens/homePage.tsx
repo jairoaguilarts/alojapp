@@ -26,9 +26,10 @@ function HomeScreen(props: { nombreUsuario: string }) {
   const [buscarUbicacion, setUbicacion] = useState<string>('');
 
   return (
+    <ScrollView scrollEnabled={true}>
       <View style={styles.homepageV1}>
 
-        <View style={styles.topBackground}>
+        <View style={styles.topBackground} >
 
           <View style={styles.textContainer}>
             <Text style={styles.welcomeText}>
@@ -39,7 +40,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
               {nombreUsuario}
             </Text>
           </View>
-
+        
           <View style={styles.inputContainer}>
 
             <Image source={require('./icons/magnifier.png')} style={styles.inputImage} />
@@ -57,7 +58,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
           </View>
 
         </View>
-
+      
         <View style={[styles.frameGroup, styles.frameParentPosition]}>
           <View style={styles.recomendadosParent}>
             <Text style={[styles.recomendados, styles.recomendadosLayout]}>
@@ -211,6 +212,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
         </View>
         {/* ECONOMICOS SECCION COMPLETA */}
       </View>
+      </ScrollView>
   );
 }
 
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: '100%',
-    height: "35%",
+    height: "23%",
     backgroundColor: "#495C83",
     justifyContent: 'center',
     alignItems: 'flex-start',
