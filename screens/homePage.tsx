@@ -651,7 +651,7 @@ function FavoritosScreen() {
 function PerfilScreen(props: { nombreUsuario: string,correo_electronico:string,usuario:string }) {
   const { nombreUsuario, correo_electronico, usuario } = props;
 
-  const logoImage = require('alojapp/Images/profile.png');
+  const logoImage = require('alojapp/Images/profile2.png');
   const LineaHorizontal = () => {
     return <View style={styles2.linea} />;
   };
