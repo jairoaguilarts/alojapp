@@ -43,7 +43,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
             placeholder="Dónde viajarás hoy?"
             placeholderTextColor="#fff"
             onChangeText={setUbicacion}
-            textAlign="center"  // Centrar el texto en el TextInput
+            textAlign="center"  
           />
           <Image source={require('./icons/filters.png')} style={styles.inputImage} />
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D3652',
   },
   textContainer: {
-    justifyContent: 'flex-start', // Cambia esto para alinear los elementos hijos al inicio
+    justifyContent: 'flex-start',
     marginTop: 20,
     paddingLeft: 20,
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     textAlign: 'left',
-    marginBottom: 20, // Agrega esto para agregar algo de espacio entre el nombre del usuario y el campo de entrada
+    marginBottom: 20,
   },
   topBackground: {
     position: 'absolute',
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 50,
   },
   inputContainer: {
-    flexDirection: 'row', // Alinear los elementos hijos en línea horizontal
-    justifyContent: 'space-between', // Distribuir el espacio de manera equitativa entre los elementos hijos
-    alignItems: 'center', // Alinear los elementos hijos verticalmente en el centro
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#88B4F5',
     borderTopLeftRadius: 20,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderColor: '#2196F3',
     borderRadius: 5,
     color: '#fff',
-    flex: 1, // Ocupar todo el espacio disponible en el contenedor
+    flex: 1,
   },
   inputImage: {
     margin: 20,
