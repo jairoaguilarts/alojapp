@@ -62,10 +62,10 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Inicio" component={Inicio} />
-        <Stack.Screen name="InicioSesion" component={InicioSesion} />
-        <Stack.Screen name="CrearCuenta" component={CrearCuenta} />
-        <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="Inicio" component={Inicio}  options={{ headerShown: false }}/>
+        <Stack.Screen name="InicioSesion" component={InicioSesion} options={{ headerShown: false }} />
+        <Stack.Screen name="CrearCuenta" component={CrearCuenta} options={{ headerShown: false }} />
+        <Stack.Screen name="HomePage" component={HomePage}  options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

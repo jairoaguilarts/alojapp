@@ -825,9 +825,9 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
         inactiveTintColor: 'tomato',
       })}
     >
-      <Tab.Screen name="Home">{() => <HomeScreen nombreUsuario={nombreUsuario}  />}</Tab.Screen>
-      <Tab.Screen name="Favoritos" component={FavoritosScreen} />
-      <Tab.Screen name="Perfil">{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
+      <Tab.Screen name="Home"  options={{ headerShown: false }}>{() => <HomeScreen nombreUsuario={nombreUsuario}  />}</Tab.Screen>
+      <Tab.Screen name="Favoritos" component={FavoritosScreen}  options={{ headerShown: false }}/>
+      <Tab.Screen name="Perfil" options={{ headerShown: false }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
     </Tab.Navigator>
   );
 };
