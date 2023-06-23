@@ -162,8 +162,6 @@ app.post('/agregarPropiedades', (req, res) => {
     });
 });
 
-
-
 app.get('/detalles_propiedad', (req, res) => {
   Detalles_Propiedad.find({}, (error, detalles_propiedad) => {
     if (error) {
@@ -290,7 +288,6 @@ app.delete('/deleteCard/:firebaseUID/:cardId', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);

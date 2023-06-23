@@ -37,7 +37,9 @@ function HomeScreen(props: { nombreUsuario: string }) {
         </View>
 
         <View style={styles.inputContainer}>
+
           <Image source={require('./icons/magnifier.png')} style={styles.inputImage} />
+
           <TextInput
             style={styles.input}
             placeholder="Dónde viajarás hoy?"
@@ -45,6 +47,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
             onChangeText={setUbicacion}
             textAlign="center"  
           />
+          
           <Image source={require('./icons/filters.png')} style={styles.inputImage} />
 
         </View>
@@ -68,12 +71,12 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 20,
     textAlign: 'left',
   },
   nameText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 30,
     textAlign: 'left',
     marginBottom: 20,
   },
