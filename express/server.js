@@ -2,6 +2,8 @@ require('dotenv').config({ path: './configDB/credentials.env' });
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const fs = require('fs');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { initializeApp } = require('firebase/app');
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } = require('firebase/auth');
@@ -11,14 +13,16 @@ const app = express();
 const appFirebase = initializeApp(firebaseConfig);
 const port = 3000;
 
+// Configurando multer para manejar la subida de archivos
+const upload = multer({ dest: 'uploads/' });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Schemas
 const Usuario = require("./schemas/usuarios");
 const Favorito = require("./schemas/favoritos");
-const Propiedad = require("./schemas/propiedades");
-const Detalles_Propiedad = require("./schemas/detalles_propiedad");
+const Alojamiento = require("./schemas/alojamientos");
 
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
@@ -133,62 +137,30 @@ app.post('/agregarUsuario', async (req, res) => {
   }
 });
 
-app.get('/propiedades', (req, res) => {
-  Propiedad.find({}, (error, propiedades) => {
-    if (error) {
-      console.log('Error al obtener propiedades:', error);
-      res.status(500).json({ error: 'Error al obtener propiedades' });
-    } else {
-      res.json(propiedades);
-    }
-  });
-});
+app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
+  try {
+    const imgData = fs.readFileSync(req.file.path);
 
-app.post('/agregarPropiedades', (req, res) => {
-  const nuevoPropiedad = new Propiedad({
-    id_propiedad: req.body.id_propiedad,
-    id_usuario: req.body.id_usuario,
-    localizamiento: req.body.localizamiento,
-    precio: req.body.precio,
-    cuartos: req.body.cuartos,
-    banios: req.body.banios,
-  });
-  nuevoPropiedad.save()
-    .then(propiedad => {
-      res.json(propiedad);
-    })
-    .catch(error => {
-      res.status(500).send(error);
+    const alojamiento = new Alojamiento({
+      idAlojamiento: req.body.idAlojamiento,
+      ubicacion: req.body.ubicacion,
+      precio: req.body.precio,
+      personas: req.body.personas,
+      img: { data: imgData, contentType: 'image/jpg' },
+      fechaEntrada: req.body.fechaEntrada,
+      fechaSalida: req.body.fechaSalida,
+      estrellas: req.body.estrellas,
+      resenas: req.body.resenas,
+      tipo: req.body.tipo,
     });
-});
 
-app.get('/detalles_propiedad', (req, res) => {
-  Detalles_Propiedad.find({}, (error, detalles_propiedad) => {
-    if (error) {
-      console.log('Error al obtener detalles de las propiedades:', error);
-      res.status(500).json({ error: 'Error al obtener detalles de las propiedades' });
-    } else {
-      res.json(detalles_propiedad);
-    }
-  });
-});
+    const newAlojamiento = await alojamiento.save();
 
-app.post('/agregarDetallesPropiedades', (req, res) => {
-  const nuevoDetallesPropiedad = new Detalles_Propiedad({
-    id_propiedad: req.body.id_propiedad,
-    max_huespedes: req.body.max_huespedes,
-    camas: req.body.camas,
-    cocina: req.body.cocina,
-    wifi: req.body.wifi,
-    parqueo: req.body.parqueo,
-  });
-  nuevoDetallesPropiedad.save()
-    .then(detalles_propiedades => {
-      res.json(detalles_propiedades);
-    })
-    .catch(error => {
-      res.status(500).send(error);
-    });
+    res.status(201).json(newAlojamiento);
+  } catch (error) {
+    console.error('Error creando alojamiento: ', error);
+    res.status(500).json({ error: 'Error creando alojamiento' });
+  }
 });
 
 app.get('/favoritos', (req, res) => {

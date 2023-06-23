@@ -24,52 +24,47 @@ function HomeScreen(props: { nombreUsuario: string }) {
   const [buscarUbicacion, setUbicacion] = useState<string>('');
 
   return (
-    
-  
-    <View style={styles.container}>
-      <View style={styles.topBackground}>
+      <View style={styles.container}>
 
-        <View style={styles.textContainer}>
-          <Text style={styles.welcomeText}>
-            Bienvenido,
-          </Text>
-          <Text style={styles.nameText}>
-            {nombreUsuario}
-          </Text>
-        </View>
+        <View style={styles.topBackground}>
 
+          <View style={styles.textContainer}>
+            <Text style={styles.welcomeText}>
+              Bienvenido,
+            </Text>
+            <Text style={styles.nameText}>
+              {nombreUsuario}
+            </Text>
+          </View>
 
-       
+          <View style={styles.inputContainer}>
 
-        <View style={styles.inputContainer}>
+            <Image source={require('./icons/magnifier.png')} style={styles.inputImage} />
 
-          <Image source={require('./icons/magnifier.png')} style={styles.inputImage} />
+            <TextInput
+              style={styles.input}
+              placeholder="Dónde viajarás hoy?"
+              placeholderTextColor="#fff"
+              onChangeText={setUbicacion}
+              textAlign="center"
+            />
 
+            <Image source={require('./icons/filters.png')} style={styles.inputImage} />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Dónde viajarás hoy?"
-            placeholderTextColor="#fff"
-            onChangeText={setUbicacion}
-            textAlign="center"  
-          />
-          
-          <Image source={require('./icons/filters.png')} style={styles.inputImage} />
+          </View>
 
         </View>
 
-      </View>
-      
-      <View style={[styles.frameGroup, styles.frameParentPosition]}>
+        <View style={[styles.frameGroup, styles.frameParentPosition]}>
           <View style={styles.recomendadosParent}>
             <Text style={[styles.recomendados, styles.recomendadosLayout]}>
               Recomendados
             </Text>
           </View>
-          
+
           {/* RECOMENDADOS SECCION COMPLETA */}
-              {/* Componente 1 */}
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {/* Componente 1 */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{ flexDirection: 'row' }}>
               <View style={styles.frameWrapper}>
                 <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
@@ -113,7 +108,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                   </View>
                 </View>
               </View>
-              <View style={styles.frameWrapper2 }>
+              <View style={styles.frameWrapper2}>
                 <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
                   <View>
                     <View style={styles.groupLayout}>
@@ -155,15 +150,10 @@ function HomeScreen(props: { nombreUsuario: string }) {
                   </View>
                 </View>
               </View>
-              </View>
+            </View>
           </ScrollView>
-           </View>
-            
-
-              
-             
+        </View>
         {/* FINAL DE RECOMENDADOS SECCION COMPLETA */}
-
 
         <View style={[styles.frameParent3, styles.frameParentPosition]}>
           <View style={styles.recomendadosParent}>
@@ -175,51 +165,49 @@ function HomeScreen(props: { nombreUsuario: string }) {
             </View>
           </View>
 
-        {/* ECONOMICOS SECCION COMPLETA */}
-
-              {/* Componente 1 */}
-              <View style={styles.recomendados}>
-              <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                  <View>
-                    <View style={styles.groupLayout}>
-                      <Image
-                        style={[styles.groupChild, styles.groupLayout]}
-                        resizeMode="cover"
-                        source={require("../assets/group-6634.png")}
-                      />
-                      <View style={styles.frameContainer}>
-                        <View>
-                          <Text style={styles.villaValor}>Casa Azul</Text>
-                          <View style={styles.vectorParent}>
-                            <Image
-                              style={styles.vectorIcon}
-                              resizeMode="cover"
-                              source={require("../assets/vector.png")}
-                            />
-                            <Text style={styles.reseas}>3.9 | 30 reseñas</Text>
-                          </View>
-                        </View>
+          {/* ECONOMICOS SECCION COMPLETA */}
+          {/* Componente 1 */}
+          <View style={styles.recomendados}>
+            <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+              <View>
+                <View style={styles.groupLayout}>
+                  <Image
+                    style={[styles.groupChild, styles.groupLayout]}
+                    resizeMode="cover"
+                    source={require("../assets/group-6634.png")}
+                  />
+                  <View style={styles.frameContainer}>
+                    <View>
+                      <Text style={styles.villaValor}>Casa Azul</Text>
+                      <View style={styles.vectorParent}>
                         <Image
-                          style={styles.maskGroupIcon}
+                          style={styles.vectorIcon}
                           resizeMode="cover"
-                          source={require("../assets/mask-group4.png")}
+                          source={require("../assets/vector.png")}
                         />
+                        <Text style={styles.reseas}>3.9 | 30 reseñas</Text>
                       </View>
                     </View>
-                    <View style={styles.reseas}>
-                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        Santa Lucía, Honduras
-                      </Text>
-                      <Text style={styles.diciembre10}>Junio 13 - Julio 20</Text>
-                      <Text style={styles.diciembre10}>L. 700 por noche</Text>
-                    </View>
+                    <Image
+                      style={styles.maskGroupIcon}
+                      resizeMode="cover"
+                      source={require("../assets/mask-group4.png")}
+                    />
                   </View>
                 </View>
+                <View style={styles.reseas}>
+                  <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                    Santa Lucía, Honduras
+                  </Text>
+                  <Text style={styles.diciembre10}>Junio 13 - Julio 20</Text>
+                  <Text style={styles.diciembre10}>L. 700 por noche</Text>
+                </View>
               </View>
+            </View>
+          </View>
         </View>
         {/* ECONOMICOS SECCION COMPLETA */}
-        </View>
-
+      </View>
   );
 }
 
@@ -258,8 +246,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 50,
   },
   inputContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#88B4F5',
@@ -444,7 +432,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.titleT2_size,
     fontFamily: FontFamily.titleT2,
   },
-  
+
   btnPrimario1: {
     width: 91,
     paddingLeft: Padding.p_3xs,
@@ -614,7 +602,7 @@ const styles = StyleSheet.create({
     left: 338,
   },
 
-  
+
   tabBar: {
     marginLeft: -214,
     bottom: 0,
