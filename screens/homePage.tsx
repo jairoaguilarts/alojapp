@@ -24,7 +24,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
   const [buscarUbicacion, setUbicacion] = useState<string>('');
 
   return (
-      <View style={styles.container}>
+      <View style={styles.homepageV1}>
 
         <View style={styles.topBackground}>
 
