@@ -188,7 +188,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                               resizeMode="cover"
                               source={require("../assets/vector.png")}
                             />
-                            <Text style={styles.reseas}>3.9 | 30 reseñas</Text>
+                            <Text style={[styles.reseas, styles.reseasTypo]}>3.9 | 30 reseñas</Text>
                           </View>
                         </View>
                         <Image
@@ -227,7 +227,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                               resizeMode="cover"
                               source={require("../assets/vector.png")}
                             />
-                            <Text style={styles.reseas}>4.1 | 19 reseñas</Text>
+                            <Text style={[styles.reseas, styles.reseasTypo]}>4.1 | 19 reseñas</Text>
                           </View>
                         </View>
                         <Image
