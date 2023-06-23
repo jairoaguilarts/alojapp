@@ -164,53 +164,92 @@ function HomeScreen(props: { nombreUsuario: string }) {
             <Text style={[styles.recomendados, styles.recomendadosLayout]}>
               Económicos
             </Text>
-            <View style={[styles.btnPrimario1, styles.recomendadosLayout]}>
-              <Text style={styles.botnTerciario}>Ver todos</Text>
-            </View>
           </View>
 
-          {/* ECONOMICOS SECCION COMPLETA */}
-          {/* Componente 1 */}
-          <View style={styles.recomendados}>
-            <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-              <View>
-                <View style={styles.groupLayout}>
-                  <Image
-                    style={[styles.groupChild, styles.groupLayout]}
-                    resizeMode="cover"
-                    source={require("../assets/group-6634.png")}
-                  />
-                  <View style={styles.frameContainer}>
-                    <View>
-                      <Text style={styles.villaValor}>Casa Azul</Text>
-                      <View style={styles.vectorParent}>
+        {/* ECONOMICOS SECCION COMPLETA */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={{ flexDirection: 'row' }}>
+              {/* Componente 1 */}
+              <View style={styles.frameWrapper}>
+              <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+                  <View>
+                    <View style={styles.groupLayout}>
+                      <Image
+                        style={[styles.groupChild, styles.groupLayout]}
+                        resizeMode="cover"
+                        source={require("../assets/group-6634.png")}
+                      />
+                      <View style={styles.frameContainer}>
+                        <View>
+                          <Text style={styles.villaValor}>Casa Azul</Text>
+                          <View style={styles.vectorParent}>
+                            <Image
+                              style={styles.vectorIcon}
+                              resizeMode="cover"
+                              source={require("../assets/vector.png")}
+                            />
+                            <Text style={styles.reseas}>3.9 | 30 reseñas</Text>
+                          </View>
+                        </View>
                         <Image
-                          style={styles.vectorIcon}
+                          style={styles.maskGroupIcon}
                           resizeMode="cover"
-                          source={require("../assets/vector.png")}
+                          source={require("../assets/mask-group4.png")}
                         />
-                        <Text style={styles.reseas}>3.9 | 30 reseñas</Text>
                       </View>
                     </View>
-                    <Image
-                      style={styles.maskGroupIcon}
-                      resizeMode="cover"
-                      source={require("../assets/mask-group4.png")}
-                    />
+                    <View style={styles.reseas}>
+                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                        Santa Lucía, Honduras
+                      </Text>
+                      <Text style={styles.diciembre10}>Junio 13 - Julio 20</Text>
+                      <Text style={styles.diciembre10}>L. 700 por noche</Text>
+                    </View>
                   </View>
                 </View>
-                <View style={styles.reseas}>
-                  <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                    Santa Lucía, Honduras
-                  </Text>
-                  <Text style={styles.diciembre10}>Junio 13 - Julio 20</Text>
-                  <Text style={styles.diciembre10}>L. 700 por noche</Text>
+              </View>
+              {/* Componente 2 */}
+              <View style={styles.frameWrapper}>
+              <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+                  <View>
+                    <View style={styles.groupLayout}>
+                      <Image
+                        style={[styles.groupChild, styles.groupLayout]}
+                        resizeMode="cover"
+                        source={require("../assets/group-6635.png")}
+                      />
+                      <View style={styles.frameContainer}>
+                        <View>
+                          <Text style={styles.villaValor}>Ojojona</Text>
+                          <View style={styles.vectorParent}>
+                            <Image
+                              style={styles.vectorIcon}
+                              resizeMode="cover"
+                              source={require("../assets/vector.png")}
+                            />
+                            <Text style={styles.reseas}>4.1 | 19 reseñas</Text>
+                          </View>
+                        </View>
+                        <Image
+                          style={styles.maskGroupIcon}
+                          resizeMode="cover"
+                          source={require("../assets/mask-group5.png")}
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.reseas}>
+                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                      Ojojona, Honduras
+                      </Text>
+                      <Text style={styles.diciembre10}>Mayo 20 - Mayo 29</Text>
+                      <Text style={styles.diciembre10}>L. 700 por noche</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
+          </ScrollView>
         </View>
-        {/* ECONOMICOS SECCION COMPLETA */}
       </View>
       </ScrollView>
   );
