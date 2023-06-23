@@ -98,7 +98,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                         <Image
                           style={styles.maskGroupIcon}
                           resizeMode="cover"
-                          source={require("../assets/mask-group.png")}
+                          source={require("../assets/btn-favorites.png")}
                         />
                       </View>
                     </View>
@@ -140,7 +140,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                         <Image
                           style={styles.maskGroupIcon}
                           resizeMode="cover"
-                          source={require("../assets/mask-group1.png")}
+                          source={require("../assets/btn-favorites.png")}
                         />
                       </View>
                     </View>
@@ -194,7 +194,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                         <Image
                           style={styles.maskGroupIcon}
                           resizeMode="cover"
-                          source={require("../assets/mask-group4.png")}
+                          source={require("../assets/btn-favorites.png")}
                         />
                       </View>
                     </View>
@@ -233,7 +233,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                         <Image
                           style={styles.maskGroupIcon}
                           resizeMode="cover"
-                          source={require("../assets/mask-group5.png")}
+                          source={require("../assets/btn-favorites.png")}
                         />
                       </View>
                     </View>
