@@ -1,9 +1,9 @@
-import { Image, StyleSheet, View, Text, ScrollView } from "react-native";
+import { Image, StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as React from "react";
+import React, { useState } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
 
 
@@ -21,12 +21,34 @@ type HomeProps = {
 
 function HomeScreen(props: { nombreUsuario: string }) {
   const { nombreUsuario } = props;
+  const [buscarUbicacion, setUbicacion] = useState<string>('');
+
   return (
     <View style={styles.container}>
-      <View style={styles.topBackground} />
-      <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>Bienvenido</Text>
-        <Text style={styles.nameText}>{nombreUsuario}</Text>
+      <View style={styles.topBackground}>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.welcomeText}>
+            Bienvenido,
+          </Text>
+          <Text style={styles.nameText}>
+            {nombreUsuario}
+          </Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Image source={require('./icons/magnifier.png')} style={styles.inputImage} />
+          <TextInput
+            style={styles.input}
+            placeholder="Dónde viajarás hoy?"
+            placeholderTextColor="#fff"
+            onChangeText={setUbicacion}
+            textAlign="center"  // Centrar el texto en el TextInput
+          />
+          <Image source={require('./icons/filters.png')} style={styles.inputImage} />
+
+        </View>
+
       </View>
     </View>
   );
@@ -40,24 +62,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D3652',
   },
   textContainer: {
-    justifyContent: 'center',
-    marginTop: 10,
+    justifyContent: 'flex-start', // Cambia esto para alinear los elementos hijos al inicio
+    marginTop: 20,
+    paddingLeft: 20,
   },
   welcomeText: {
     color: 'white',
-    paddingLeft: 150,
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontSize: 15,
+    textAlign: 'left',
   },
   nameText: {
-    flex: 1,
-    alignItems: 'center',
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 40,
+    fontSize: 25,
     textAlign: 'left',
+    marginBottom: 20, // Agrega esto para agregar algo de espacio entre el nombre del usuario y el campo de entrada
   },
   topBackground: {
     position: 'absolute',
@@ -65,8 +83,37 @@ const styles = StyleSheet.create({
     width: '100%',
     height: "35%",
     backgroundColor: "#495C83",
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
-
+  inputContainer: {
+    flexDirection: 'row', // Alinear los elementos hijos en línea horizontal
+    justifyContent: 'space-between', // Distribuir el espacio de manera equitativa entre los elementos hijos
+    alignItems: 'center', // Alinear los elementos hijos verticalmente en el centro
+    borderWidth: 1,
+    borderColor: '#88B4F5',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    width: '90%',
+    marginHorizontal: 20,
+    marginBottom: 17.5,
+    backgroundColor: 'rgba(136, 180, 245, 0.3)',
+  },
+  input: {
+    borderColor: '#2196F3',
+    borderRadius: 5,
+    color: '#fff',
+    flex: 1, // Ocupar todo el espacio disponible en el contenedor
+  },
+  inputImage: {
+    margin: 20,
+    width: 30,
+    height: 30,
+  },
 });
 
 function FavoritosScreen() {
