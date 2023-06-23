@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
+import { set } from 'mongoose';
 
 type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: { nombreUsuario: string } | undefined;
+  HomePage: { nombreUsuario: string,correo_electronico:string,usuario:string } | undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
@@ -18,9 +19,11 @@ type InicioProps = {
 const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
 
-  const [nombre_usuario, setNombre_usuario] = useState<string>('');
+  const [user, setNombre_usuario] = useState<string>('');
   const [nombre, setNombre] = useState<string>('');
   const [contrasenia, setContrasenia] = useState<string>('');
+  const [correo_electronico, setCorreo_electronico] = useState<string>('');
+  const [usuario, setUsuario] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   const handleUsuarioCambio = (text: string) => {
@@ -36,7 +39,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
     try {
       // Datos de inicio de sesión del usuario
       const userData = {
-        correo: nombre_usuario,
+        correo: user,
         contrasenia: contrasenia,
       };
 
@@ -56,7 +59,9 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
           
             console.log('Usuario autenticado correctamente: ', data.usuario);
             setNombre(data.usuario.nombre);
-            navigation.navigate('HomePage', { nombreUsuario: data.usuario.nombre as string });
+            setCorreo_electronico(data.usuario.correo);
+            setUsuario(data.usuario.nombre_usuario);
+            navigation.navigate('HomePage', { nombreUsuario: data.usuario.nombre as string,correo_electronico:data.usuario.correo as string,usuario:data.usuario.nombre_usuario as string });
           } else {
             console.error('Error durante el inicio de sesión: ', data.error);
           }
@@ -101,7 +106,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
           <View style={styles.inputContainer}>
             <TextInput style={styles.input}
               placeholder="Correo electronico" placeholderTextColor="#fff"
-              value={nombre_usuario}
+              value={user}
               onChangeText={handleUsuarioCambio}
             />
           </View>
