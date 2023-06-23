@@ -153,8 +153,8 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
             return <Image source={require('./icons/profile.png')} style={{ width: size, height: size, tintColor: color }} />;
           }
         },
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: 'gray',
+        inactiveTintColor: 'tomato',
       })}
     >
       <Tab.Screen name="Home">{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
