@@ -137,6 +137,19 @@ app.post('/agregarUsuario', async (req, res) => {
   }
 });
 
+app.get('/usuario/:firebaseUID', async (req, res) => {
+  try {
+    const { firebaseUID } = req.params;
+    const user = await Usuario.findOne({ firebaseUID: firebaseUID });
+    if (!user) {
+      return res.status(404).send('No se encontró al usuario con ese ID.');
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(500).send('Ocurrió un error en el servidor.');
+  }
+});
+
 app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
   try {
     const imgData = fs.readFileSync(req.file.path);

@@ -11,14 +11,13 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: { nombreUsuario: string, correo_electronico: string, usuario: string };
+  HomePage: { firebaseUID: string };
 };
 
 type HomeProps = {
   navigation: StackNavigationProp<RootStackParamList, 'HomePage'>;
   route: RouteProp<RootStackParamList, 'HomePage'>;
 };
-
 
 function HomeScreen(props: { nombreUsuario: string }) {
   const { nombreUsuario } = props;
@@ -1039,9 +1038,27 @@ const styles2 = StyleSheet.create({
 const Tab = createBottomTabNavigator();
 
 const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
-  const nombreUsuario = route.params.nombreUsuario;
-  const correo = route.params.correo_electronico;
-  const usuario = route.params.usuario;
+  const firebaseUID = route.params.firebaseUID;
+  const [correo, setCorreo] = useState('');
+  const [nombreUsuario, setNombreUsuario] = useState('');
+  const [usuario, setUsuario] = useState('');
+
+  // Peticion al back para obtener la informacion del usuario
+  fetch(`http://10.0.2.2:3000/usuario/${firebaseUID}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ocurrió un error en la respuesta');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setCorreo(data.correo);
+      setNombreUsuario(data.nombre);
+      setUsuario(data.nombre_usuario);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 
   return (
     <Tab.Navigator

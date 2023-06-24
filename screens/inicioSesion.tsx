@@ -7,13 +7,12 @@ type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
-  HomePage: { nombreUsuario: string,correo_electronico:string,usuario:string } | undefined;
+  HomePage: { firebaseUID: string } | undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
 type InicioProps = {
   navigation: NavigationProp<RootStackParamList, 'InicioSesion'>;
-  
 };
 
 const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
@@ -61,7 +60,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
             setNombre(data.usuario.nombre);
             setCorreo_electronico(data.usuario.correo);
             setUsuario(data.usuario.nombre_usuario);
-            navigation.navigate('HomePage', { nombreUsuario: data.usuario.nombre as string,correo_electronico:data.usuario.correo as string,usuario:data.usuario.nombre_usuario as string });
+            navigation.navigate('HomePage', { firebaseUID: data.usuario.firebaseUID as string });
           } else {
             console.error('Error durante el inicio de sesión: ', data.error);
           }
