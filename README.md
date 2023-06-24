@@ -35,13 +35,10 @@ npm i
 3. Igualmente, instale las dependencias necesarias para el BackEnd dentro de `.\express\`
 ```
 npm i express
-```
-```
 npm i firebase
-```
-```
 npm i stripe
 ```
+**Usualmente solo con `npm i` es suficiente, pero si le da error, pruebe con los comandos de arriba**
 
 ## Guia de Uso
 1. Dentro de `.\express\`, inicialize la conexion con la base de datos
@@ -56,3 +53,32 @@ npx react-native run-android
 run react-native start
 ```
 3. Al iniciar la app, ingrese con su cuenta, sino registrese, y luego tendra libre acceso al contenido disponible.
+
+## Funcionalidades
+* _Crear_ o _Registrar_ un usuario
+* Acceso a diferentes alojamientos
+* Acceso a perfil
+* Acceso a alojamientos favoritos
+* Reservacion de Alojamientos
+
+## Ejemplo de Codigo
+```
+function App(): JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Inicio" component={Inicio}  options={{ headerShown: false }}/>
+        <Stack.Screen name="InicioSesion" component={InicioSesion} options={{ headerShown: false }} />
+        <Stack.Screen name="CrearCuenta" component={CrearCuenta} options={{ headerShown: false }} />
+        <Stack.Screen name="HomePage" component={HomePage}  options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+``` 
