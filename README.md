@@ -62,7 +62,7 @@ run react-native start
 * Reservacion de Alojamientos
 
 ## Ejemplo de Codigo
-```
+```ruby 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
