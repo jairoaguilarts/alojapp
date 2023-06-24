@@ -8,8 +8,8 @@ interface Props {
 
 const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
 
-    const [alojamientosRecomendados, setAlojamientosRecomendados] = useState([]);
-    const [alojamientosEconomicos, setAlojamientosEconomicos] = useState([]);
+    const [alojamientosRecomendados, setAlojamientosRecomendados] = useState<any[]>([]);
+    const [alojamientosEconomicos, setAlojamientosEconomicos] = useState<any[]>([]);
     const [searchText, setSearchText] = useState('');
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
@@ -34,7 +34,7 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
     // Carga los alojamientos por busqueda de ubicacion
     useEffect(() => {
         if (searchText !== '') {
-            fetch(`http://10.0.2.2:3000/usuario/${searchText}`)
+            fetch(`http://10.0.2.2:3000/buscarAlojamiento/${searchText}`)
                 .then(response => response.json())
                 .then(data => setSuggestions(data))
                 .catch(error => console.error('Error:', error));
@@ -42,47 +42,13 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
     }, [searchText]);
 
     const handleSearchTextChange = (text: string) => {
-        if (searchText === '') {
+        setSearchText(text);
+        if(text === ''){
             setSearching(false);
-            setSearchText(text);
         } else {
             setSearching(true);
-            setSearchText(text);
         }
     };
-
-    /*//<Obtencion de los datos desde la Base de Datos>
-    useEffect(() => {
-      const fetchAlojamientos = async () => {
-        try {
-          const response = await fetch('http://10.0.2.2:3000/buscarAlojamiento');
-          const data = await response.json();
-          setSuggestions(data);
-        } catch (error) {
-          console.error('Error al obtener los alojamientos', error);
-        }
-      };
-  
-      fetchAlojamientos();
-    }, []);
-  
-    //<Filtrado de los datos>
-    const handleSearchTextChange = (text: string) => {
-      searching = true;
-      setSearchText(text);
-  
-      const filteredAlojamientos = suggestions.filter((alojamiento) => {
-        const ubicacion = alojamiento.ubicacion as string;
-        const precio = alojamiento.precio as string;
-        const lowerCaseSearchText = text.toLowerCase();
-        return (
-          ubicacion.toLowerCase().includes(lowerCaseSearchText) ||
-          precio.toLowerCase().includes(lowerCaseSearchText)
-        );
-      });
-  
-      setSuggestions(filteredAlojamientos);
-    };*/
 
     return (
         <ScrollView scrollEnabled={true}>
@@ -117,9 +83,65 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
 
                 </View>
 
-                {!searching ?
+                {searching ?
                     (
-                        <View>
+                        <View style={[styles.frameGroup, styles.frameParentPosition]}>
+                            <View style={styles.recomendadosParent}>
+                                <Text style={[styles.recomendados, styles.recomendadosLayout]}>
+                                    Resultados
+                                </Text>
+                            </View>
+
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    {suggestions.map((alojamiento) => {
+                                        return (
+                                            <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
+                                                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+                                                    <View>
+                                                        <View style={styles.groupLayout}>
+                                                            <Image
+                                                                style={[styles.groupChild, styles.groupLayout]}
+                                                                resizeMode="cover"
+                                                                source={{ uri: alojamiento.imgSrc }}
+                                                            />
+                                                            <View style={styles.frameContainer}>
+                                                                <View>
+                                                                    <Text style={[styles.villaValor, styles.villaValorTypo]}>
+                                                                        {alojamiento.nombre}
+                                                                    </Text>
+                                                                    <View style={styles.vectorParent}>
+                                                                        <Image
+                                                                            style={styles.vectorIcon}
+                                                                            resizeMode="cover"
+                                                                            source={require("../assets/vector.png")}
+                                                                        />
+                                                                        <Text style={[styles.reseas, styles.reseasTypo]}>
+                                                                            {alojamiento.estrellas} | {alojamiento.resenas}
+                                                                        </Text>
+                                                                    </View>
+                                                                </View>
+                                                            </View>
+                                                        </View>
+                                                        <View style={styles.reseas}>
+                                                            <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                                                                {alojamiento.ubicacion}
+                                                            </Text>
+                                                            <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
+                                                            <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
+                            </ScrollView>
+                        </View>
+                    )
+                    :
+                    (
+                        <>
                             <View style={[styles.frameGroup, styles.frameParentPosition]}>
                                 <View style={styles.recomendadosParent}>
                                     <Text style={[styles.recomendados, styles.recomendadosLayout]}>
@@ -226,63 +248,7 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
                                     </View>
                                 </ScrollView>
                             </View>
-                        </View>
-                    )
-                    :
-                    (
-                        <View style={[styles.frameParent3, styles.frameParentPosition]}>
-                            <View style={styles.recomendadosParent}>
-                                <Text style={[styles.recomendados, styles.recomendadosLayout]}>
-                                    Resulados
-                                </Text>
-                            </View>
-
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    {suggestions.map((alojamiento) => {
-                                        return (
-                                            <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
-                                                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                                                    <View>
-                                                        <View style={styles.groupLayout}>
-                                                            <Image
-                                                                style={[styles.groupChild, styles.groupLayout]}
-                                                                resizeMode="cover"
-                                                                source={{ uri: alojamiento.imgSrc }}
-                                                            />
-                                                            <View style={styles.frameContainer}>
-                                                                <View>
-                                                                    <Text style={[styles.villaValor, styles.villaValorTypo]}>
-                                                                        {alojamiento.nombre}
-                                                                    </Text>
-                                                                    <View style={styles.vectorParent}>
-                                                                        <Image
-                                                                            style={styles.vectorIcon}
-                                                                            resizeMode="cover"
-                                                                            source={require("../assets/vector.png")}
-                                                                        />
-                                                                        <Text style={[styles.reseas, styles.reseasTypo]}>
-                                                                            {alojamiento.estrellas} | {alojamiento.resenas}
-                                                                        </Text>
-                                                                    </View>
-                                                                </View>
-                                                            </View>
-                                                        </View>
-                                                        <View style={styles.reseas}>
-                                                            <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                                                                {alojamiento.ubicacion}
-                                                            </Text>
-                                                            <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
-                                                            <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
-                                                        </View>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        );
-                                    })}
-                                </View>
-                            </ScrollView>
-                        </View>
+                        </>
                     )
                 }
             </View>
