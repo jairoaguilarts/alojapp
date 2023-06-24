@@ -303,15 +303,14 @@ app.listen(port, () => {
 //Endpoint Para buscar obtener info de alojamiento
 app.get('/alojamientos/:idalojamiento', async (req, res) => {
   try {
-    const idAlojamiento = req.params.idalojamiento;
+    const idAlojamiento = req.params.idAlojamiento;
 
     const client = new MongoClient(mongoUri);
     await client.connect();
 
     const db = client.db();
     const collection = db.collection('alojamientos');
-
-    const document = await collection.findOne({ idalojamiento: idAlojamiento });
+    const document = await collection.findOne({ idAlojamiento: idAlojamiento });
 
     res.json(document);
   } catch (error) {
@@ -320,6 +319,3 @@ app.get('/alojamientos/:idalojamiento', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
