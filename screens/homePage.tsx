@@ -7,7 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
 
 import HomeScreen from "./homeScreen";
-import FavoritosScreen from "./favoritosScreen";
+import FavoritosScreens from "./favoritosScreen";
+import PerfilScreen from "./perfilScreen";
 
 type RootStackParamList = {
   Inicio: undefined;
@@ -21,69 +22,7 @@ type HomeProps = {
   route: RouteProp<RootStackParamList, 'HomePage'>;
 };
 
-function PerfilScreen(props: { nombreUsuario: string, correo_electronico: string, usuario: string }) {
-  const { nombreUsuario, correo_electronico, usuario } = props;
 
-  const logoImage = require('alojapp/Images/profile2.png');
-  const LineaHorizontal = () => {
-    return <View style={styles2.linea} />;
-  };
-  const renderLogo = () => {
-    if (logoImage) {
-      return (
-        <Image
-          source={logoImage}
-          style={styles2.logo}
-          resizeMode="contain"
-        />
-      );
-    } else {
-      return (
-        <Text style={styles2.logoFallback}>Logo</Text>
-      );
-    }
-  };
-
-  return (
-    <ScrollView>
-
-      <View style={styles2.datosPerfilContainer}>
-        <View>
-          <Text style={styles2.datosPerfilTitle}>Datos Personales</Text>
-        </View>
-        <View style={styles2.logoContainer}>
-          {renderLogo()}
-        </View>
-
-        <View>
-          <Text style={styles2.datosPerfilTitle}>{nombreUsuario}</Text>
-          <Text style={styles2.datosPerfilSubtitle}>@{usuario}</Text>
-        </View>
-        <LineaHorizontal />
-        <View style={styles2.datos}>
-          <Text style={styles2.datosTitle}>Nombre completo</Text>
-          <Text style={styles2.datosValue}>{nombreUsuario}</Text>
-        </View>
-
-        <LineaHorizontal />
-        <View style={styles2.datos}>
-          <Text style={styles2.datosTitle}>Número de teléfono</Text>
-          <Text style={styles2.datosValue}>No especificado</Text>
-        </View>
-        <LineaHorizontal />
-        <View style={styles2.datos}>
-          <Text style={styles2.datosTitle}>Correo electrónico</Text>
-          <Text style={styles2.datosValue}>{correo_electronico}</Text>
-        </View>
-        <LineaHorizontal />
-        <View style={styles2.datos}>
-          <Text style={styles2.datosTitle}>Dirección</Text>
-          <Text style={styles2.datosValue}>No especificada</Text>
-        </View>
-      </View>
-    </ScrollView>
-  );
-};
 const styles2 = StyleSheet.create({
   outlineParentPosition: {
     bottom: "17.5%",
@@ -365,7 +304,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
   const [correo, setCorreo] = useState('');
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [usuario, setUsuario] = useState('');
-  const [firebaseUIDHP, setFirebaseUID] = useState('');
+  const [firbaseUIDHP, setFirebaseUID] = useState('');
 
   // Peticion al back para obtener la informacion del usuario
   fetch(`http://10.0.2.2:3000/usuario/${firebaseUID}`)
@@ -406,7 +345,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
       })}
     >
       <Tab.Screen name="Home" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
-      <Tab.Screen name="Favoritos" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => (<FavoritosScreen firebaseUID={firebaseUID} />)}</Tab.Screen>
+      <Tab.Screen name="Favoritos" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <FavoritosScreens firebaseUID={firbaseUIDHP} />}</Tab.Screen>
       <Tab.Screen name="Perfil" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
     </Tab.Navigator>
   );
