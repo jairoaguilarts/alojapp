@@ -152,15 +152,14 @@ app.get('/usuario/:firebaseUID', async (req, res) => {
 
 app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
   try {
-    const imgData = fs.readFileSync(req.file.path);
-
+    
     const alojamiento = new Alojamiento({
       idAlojamiento: req.body.idAlojamiento,
       nombre: req.body.nombre,
       ubicacion: req.body.ubicacion,
       precio: req.body.precio,
       personas: req.body.personas,
-      img: { data: imgData, contentType: 'image/jpg' },
+      imgSrc: req.body.imgSrc,
       fechaEntrada: req.body.fechaEntrada,
       fechaSalida: req.body.fechaSalida,
       estrellas: req.body.estrellas,
@@ -180,7 +179,7 @@ app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
 app.get('/alojamientos/:tipo', async (req, res) => {
   try {
     const { tipo } = req.params;
-    const alojamientosPorTipo = await Alojamiento.find({ tipo: tipo });
+    const alojamientosPorTipo = await Alojamiento.find({ tipo: tipo }).select('+imgSrc');
     res.status(200).json(alojamientosPorTipo);
   } catch (error) {
     console.error('Error obteniendo alojamientos: ', error);

@@ -94,7 +94,7 @@ function HomeScreen(props: { nombreUsuario: string }) {
                           <Image
                             style={[styles.groupChild, styles.groupLayout]}
                             resizeMode="cover"
-                            source={{ uri: `data:${alojamiento.img.contentType};base64,${alojamiento.img.data}` }}
+                            source={{ uri: alojamiento.imgSrc }}
                           />
                           <View style={styles.frameContainer}>
                             <View>
@@ -433,6 +433,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     position: "absolute",
+    borderRadius: 25,
   },
   villaValor: {
     width: 198,

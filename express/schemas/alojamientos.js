@@ -5,13 +5,13 @@ const AlojamientosSchema = new mongoose.Schema({
     ubicacion: String,
     precio: String,
     personas: String,
-    img: { data: Buffer, contentType: String },
+    imgSrc: String,
     fechaEntrada: String,
     fechaSalida: String,
     estrellas: String,
     resenas: String,
     tipo: String,
-})
+});
 
 const alojamientos = mongoose.model('alojamientos', AlojamientosSchema)
 module.exports = alojamientos;
