@@ -745,17 +745,17 @@ function PerfilScreen(props: { nombreUsuario: string, correo_electronico: string
         </View>
 
         <LineaHorizontal />
-        <View style={styles2.datosPerfilContainer}>
+        <View style={styles2.datos}>
           <Text style={styles2.datosTitle}>Número de teléfono</Text>
           <Text style={styles2.datosValue}>No especificado</Text>
         </View>
         <LineaHorizontal />
-        <View style={styles2.datosPerfilContainer}>
+        <View style={styles2.datos}>
           <Text style={styles2.datosTitle}>Correo electrónico</Text>
           <Text style={styles2.datosValue}>{correo_electronico}</Text>
         </View>
         <LineaHorizontal />
-        <View style={styles2.datosPerfilContainer}>
+        <View style={styles2.datos}>
           <Text style={styles2.datosTitle}>Dirección</Text>
           <Text style={styles2.datosValue}>No especificada</Text>
         </View>
@@ -962,13 +962,14 @@ const styles2 = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    marginVertical: 30,
-
+    paddingVertical: 30,
   },
   linea: {
     height: 1,
-    backgroundColor: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
     marginVertical: 10,
+    width: '100%',
   },
   logoContainer: {
     alignItems: 'center',
@@ -1005,6 +1006,7 @@ const styles2 = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    margin: 10,
   },
   datosPerfilSubtitle: {
     fontSize: 22,
