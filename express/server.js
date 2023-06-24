@@ -301,17 +301,10 @@ app.listen(port, () => {
 });
 
 //Endpoint Para buscar obtener info de alojamiento
-app.get('/alojamientos/:idalojamiento', async (req, res) => {
+app.get('/idalojamientos/:idAlojamiento', async (req, res) => {
   try {
-    const idAlojamiento = req.params.idAlojamiento;
-
-    const client = new MongoClient(mongoUri);
-    await client.connect();
-
-    const db = client.db();
-    const collection = db.collection('alojamientos');
-    const document = await collection.findOne({ idAlojamiento: idAlojamiento });
-
+    const {idAlojamiento} = req.params;
+    const document = await Alojamiento.find({ idAlojamiento: idAlojamiento });
     res.json(document);
   } catch (error) {
     console.error(error);
