@@ -190,7 +190,7 @@ app.get('/alojamientos/:tipo', async (req, res) => {
 app.get('/buscarAlojamiento/:ubicacion', async (req, res) => {
   try {
     const { ubicacion } = req.params;
-    const alojamientosPorUbicacion = await Alojamiento.find({ ubicacion: ubicacion });
+    const alojamientosPorUbicacion = await Alojamiento.find({ ubicacion: new RegExp(ubicacion, 'i') });
     res.status(200).json(alojamientosPorUbicacion);
   } catch (error) {
     console.error('Error obteniendo alojamientos: ', error);
