@@ -141,50 +141,47 @@ function HomeScreen(props: { nombreUsuario: string }) {
           {/* ECONOMICOS SECCION COMPLETA */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{ flexDirection: 'row' }}>
-            {alojamientosEconomicos.map((alojamiento) => {
-              //No se donde define valor economico
-              if(parseInt(alojamiento.precio.replaceAll(',', '')) < 500){              
-                return(
-                <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
-                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                  <View>
-                    <View style={styles.groupLayout}>
-                      <Image
-                        style={[styles.groupChild, styles.groupLayout]}
-                        resizeMode="cover"
-                        source={{uri: `data:${alojamiento.img.contentType};base64,${alojamiento.img.data}`}}
-                      />
-                      <View style={styles.frameContainer}>
-                        <View>
-                          <Text style={[styles.villaValor, styles.villaValorTypo]}>
-                            {alojamiento.nombre}
-                          </Text>
-                          <View style={styles.vectorParent}>
-                            <Image
-                              style={styles.vectorIcon}
-                              resizeMode="cover"
-                              source={require("../assets/vector.png")}
-                            />
-                            <Text style={[styles.reseas, styles.reseasTypo]}>
-                              {alojamiento.estrellas} | {alojamiento.resenas}
-                            </Text>
+              {alojamientosEconomicos.map((alojamiento) => {
+                return (
+                  <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
+                    <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+                      <View>
+                        <View style={styles.groupLayout}>
+                          <Image
+                            style={[styles.groupChild, styles.groupLayout]}
+                            resizeMode="cover"
+                            source={{ uri: alojamiento.imgSrc }}
+                          />
+                          <View style={styles.frameContainer}>
+                            <View>
+                              <Text style={[styles.villaValor, styles.villaValorTypo]}>
+                                {alojamiento.nombre}
+                              </Text>
+                              <View style={styles.vectorParent}>
+                                <Image
+                                  style={styles.vectorIcon}
+                                  resizeMode="cover"
+                                  source={require("../assets/vector.png")}
+                                />
+                                <Text style={[styles.reseas, styles.reseasTypo]}>
+                                  {alojamiento.estrellas} | {alojamiento.resenas}
+                                </Text>
+                              </View>
+                            </View>
                           </View>
+                        </View>
+                        <View style={styles.reseas}>
+                          <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                            {alojamiento.ubicacion}
+                          </Text>
+                          <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
+                          <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                         </View>
                       </View>
                     </View>
-                    <View style={styles.reseas}>
-                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        {alojamiento.ubicacion}
-                      </Text>
-                      <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
-                      <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
-                    </View>
                   </View>
-                </View>
-              </View>
-              );
-                }
-            })}
+                );
+              })}
             </View>
           </ScrollView>
         </View>
