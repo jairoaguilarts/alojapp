@@ -48,7 +48,6 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
         } else {
             setSearching(true);
         }
-        console.log(searching + ' ' + searchText);
     };
 
     return (
