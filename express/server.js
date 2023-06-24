@@ -163,8 +163,29 @@ app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
   }
 });
 
+app.get('/alojamientos', async (req, res) => {
+  try {
+    const allAlojamientos = await Alojamiento.find({});
+    res.status(200).json(allAlojamientos);
+  } catch (error) {
+    console.error('Error obteniendo alojamientos: ', error);
+    res.status(500).json({ error: 'Error obteniendo alojamientos' });
+  }
+});
+
+app.get('/buscarAlojamiento', async (req, res) => {
+  try {
+    const { ubicacion } = req.body;
+    const alojamientosPorUbicacion = await Alojamiento.find({ ubicacion: ubicacion });
+    res.status(200).json(alojamientosPorUbicacion);
+  } catch (error) {
+    console.error('Error obteniendo alojamientos: ', error);
+    res.status(500).json({ error: 'Error obteniendo alojamientos' });
+  }
+});
+
 app.get('/favoritos', (req, res) => {
-  Favorito.find({uidUsuario: req.body.uidUsuario})
+  Favorito.find({ uidUsuario: req.body.uidUsuario })
     .then(favoritos => {
       res.json(favoritos);
     })
