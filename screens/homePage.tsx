@@ -683,20 +683,20 @@ const styles = StyleSheet.create({
 
 function FavoritosScreen() {
   return (
-      <View style={styles2.favoritosVaco}>
-        <View style={styles2.frameParent}>
-          <View style={styles2.groupParent}>
-            <Image
-              style={styles2.frameChild}
-              resizeMode="cover"
-              source={require("../assets/group-713.png")}
-            />
-            <Text style={[styles2.navegaPorLa, styles2.navegaPorLaFlexBox]}>
-              Navega por la aplicación para encontrar tu alojamiento favorito
-            </Text>
-          </View>
+    <View style={styles2.favoritosVaco}>
+      <View style={styles2.frameParent}>
+        <View style={styles2.groupParent}>
+          <Image
+            style={styles2.frameChild}
+            resizeMode="cover"
+            source={require("../assets/group-713.png")}
+          />
+          <Text style={[styles2.navegaPorLa, styles2.navegaPorLaFlexBox]}>
+            Navega por la aplicación para encontrar tu alojamiento favorito
+          </Text>
         </View>
       </View>
+    </View>
   );
 }
 
@@ -759,14 +759,11 @@ function PerfilScreen(props: { nombreUsuario: string, correo_electronico: string
           <Text style={styles2.datosTitle}>Dirección</Text>
           <Text style={styles2.datosValue}>No especificada</Text>
         </View>
-        <LineaHorizontal />
       </View>
     </ScrollView>
   );
 };
 const styles2 = StyleSheet.create({
-
-
   outlineParentPosition: {
     bottom: "17.5%",
     top: "18.75%",
@@ -955,7 +952,6 @@ const styles2 = StyleSheet.create({
     height: 926,
     overflow: "hidden",
   },
-
   datosPerfilContainer: {
     backgroundColor: '#181c2c',
     flex: 1,
@@ -987,7 +983,6 @@ const styles2 = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 32,
   },
-
   image: {
     width: '100%',
     height: '100%',
@@ -1038,13 +1033,8 @@ const styles2 = StyleSheet.create({
     fontWeight: '100',
     marginVertical: 2,
     color: '#fff'
-
   },
-
-
-
 });
-
 
 const Tab = createBottomTabNavigator();
 
@@ -1079,6 +1069,5 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
     </Tab.Navigator>
   );
 };
-
 
 export default HomePage;
