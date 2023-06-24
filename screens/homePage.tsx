@@ -3,7 +3,7 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
 
 
@@ -23,6 +23,23 @@ function HomeScreen(props: { nombreUsuario: string }) {
   const { nombreUsuario } = props;
 
   const [buscarUbicacion, setUbicacion] = useState<string>('');
+
+  const [alojamientosRecomendados, setAlojamientosRecomendados] = useState([]);
+  const [alojamientosEconomicos, setAlojamientosEconomicos] = useState([]);
+
+  useEffect(() => {
+    fetch('http://10.0.2.2:3000/alojamientos/r')
+      .then(response => response.json())
+      .then(data => setAlojamientosRecomendados(data))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://10.0.2.2:3000/alojamientos/e')
+      .then(response => response.json())
+      .then(data => setAlojamientosEconomicos(data))
+      .catch(error => console.error('Error:', error));
+  }, []);
 
   return (
     <ScrollView scrollEnabled={true}>
@@ -66,93 +83,49 @@ function HomeScreen(props: { nombreUsuario: string }) {
           </View>
 
           {/* RECOMENDADOS SECCION COMPLETA */}
-          {/* Componente 1 */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{ flexDirection: 'row' }}>
-              <View style={styles.frameWrapper}>
-                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                  <View>
-                    <View style={styles.groupLayout}>
-                      <Image
-                        style={[styles.groupChild, styles.groupLayout]}
-                        resizeMode="cover"
-                        source={require("../assets/group-663.png")}
-                      />
-                      <View style={styles.frameContainer}>
-                        <View>
-                          <Text style={[styles.villaValor, styles.villaValorTypo]}>
-                            Villa Valor
-                          </Text>
-                          <View style={styles.vectorParent}>
-                            <Image
-                              style={styles.vectorIcon}
-                              resizeMode="cover"
-                              source={require("../assets/vector.png")}
-                            />
-                            <Text style={[styles.reseas, styles.reseasTypo]}>
-                              5.0 | 50 reseñas
-                            </Text>
+              {alojamientosRecomendados.map((alojamiento) => {
+                return (
+                  <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
+                    <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
+                      <View>
+                        <View style={styles.groupLayout}>
+                          <Image
+                            style={[styles.groupChild, styles.groupLayout]}
+                            resizeMode="cover"
+                            source={{ uri: `data:${alojamiento.img.contentType};base64,${alojamiento.img.data}` }}
+                          />
+                          <View style={styles.frameContainer}>
+                            <View>
+                              <Text style={[styles.villaValor, styles.villaValorTypo]}>
+                                {alojamiento.nombre}
+                              </Text>
+                              <View style={styles.vectorParent}>
+                                <Image
+                                  style={styles.vectorIcon}
+                                  resizeMode="cover"
+                                  source={require("../assets/vector.png")}
+                                />
+                                <Text style={[styles.reseas, styles.reseasTypo]}>
+                                  {alojamiento.estrellas} | {alojamiento.resenas}
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
-                        <Image
-                          style={styles.maskGroupIcon}
-                          resizeMode="cover"
-                          source={require("../assets/btn-favorites.png")}
-                        />
-                      </View>
-                    </View>
-                    <View style={styles.reseas}>
-                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        La Ceiba, Honduras
-                      </Text>
-                      <Text style={styles.diciembre10}>Diciembre 10 - Enero 16</Text>
-                      <Text style={styles.diciembre10}>L. 2,400 por noche</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.frameWrapper2}>
-                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                  <View>
-                    <View style={styles.groupLayout}>
-                      <Image
-                        style={[styles.groupChild, styles.groupLayout]}
-                        resizeMode="cover"
-                        source={require("../assets/group-6631.png")}
-                      />
-                      <View style={styles.frameContainer}>
-                        <View>
-                          <Text style={[styles.villaValor, styles.villaValorTypo]}>
-                            Casa Tela
+                        <View style={styles.reseas}>
+                          <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
+                            {alojamiento.ubicacion}
                           </Text>
-                          <View style={styles.vectorParent}>
-                            <Image
-                              style={styles.vectorIcon}
-                              resizeMode="cover"
-                              source={require("../assets/vector.png")}
-                            />
-                            <Text style={[styles.reseas, styles.reseasTypo]}>
-                              4.6 | 40 reseñas
-                            </Text>
-                          </View>
+                          <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
+                          <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                         </View>
-                        <Image
-                          style={styles.maskGroupIcon}
-                          resizeMode="cover"
-                          source={require("../assets/btn-favorites.png")}
-                        />
                       </View>
                     </View>
-                    <View style={styles.reseas}>
-                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        Tela, Honduras
-                      </Text>
-                      <Text style={styles.diciembre10}>Agosto 4 - Septiembre 20</Text>
-                      <Text style={styles.diciembre10}>L. 2,600 por noche</Text>
-                    </View>
                   </View>
-                </View>
-              </View>
+                );
+              })}
             </View>
           </ScrollView>
         </View>
@@ -168,84 +141,50 @@ function HomeScreen(props: { nombreUsuario: string }) {
           {/* ECONOMICOS SECCION COMPLETA */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{ flexDirection: 'row' }}>
-              {/* Componente 1 */}
-              <View style={styles.frameWrapper}>
+            {alojamientosEconomicos.map((alojamiento) => {
+              //No se donde define valor economico
+              if(parseInt(alojamiento.precio.replaceAll(',', '')) < 500){              
+                return(
+                <View key={alojamiento.idAlojamiento} style={styles.frameWrapper}>
                 <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
                   <View>
                     <View style={styles.groupLayout}>
                       <Image
                         style={[styles.groupChild, styles.groupLayout]}
                         resizeMode="cover"
-                        source={require("../assets/group-6634.png")}
+                        source={{uri: `data:${alojamiento.img.contentType};base64,${alojamiento.img.data}`}}
                       />
                       <View style={styles.frameContainer}>
                         <View>
-                          <Text style={styles.villaValor}>Casa Azul</Text>
+                          <Text style={[styles.villaValor, styles.villaValorTypo]}>
+                            {alojamiento.nombre}
+                          </Text>
                           <View style={styles.vectorParent}>
                             <Image
                               style={styles.vectorIcon}
                               resizeMode="cover"
                               source={require("../assets/vector.png")}
                             />
-                            <Text style={[styles.reseas, styles.reseasTypo]}>3.9 | 30 reseñas</Text>
+                            <Text style={[styles.reseas, styles.reseasTypo]}>
+                              {alojamiento.estrellas} | {alojamiento.resenas}
+                            </Text>
                           </View>
                         </View>
-                        <Image
-                          style={styles.maskGroupIcon}
-                          resizeMode="cover"
-                          source={require("../assets/btn-favorites.png")}
-                        />
                       </View>
                     </View>
                     <View style={styles.reseas}>
                       <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        Santa Lucía, Honduras
+                        {alojamiento.ubicacion}
                       </Text>
-                      <Text style={styles.diciembre10}>Junio 13 - Julio 20</Text>
-                      <Text style={styles.diciembre10}>L. 700 por noche</Text>
+                      <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
+                      <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                     </View>
                   </View>
                 </View>
               </View>
-              {/* Componente 2 */}
-              <View style={styles.frameWrapper}>
-                <View style={[styles.previewCard1Parent, styles.groupChildPosition]}>
-                  <View>
-                    <View style={styles.groupLayout}>
-                      <Image
-                        style={[styles.groupChild, styles.groupLayout]}
-                        resizeMode="cover"
-                        source={require("../assets/group-6635.png")}
-                      />
-                      <View style={styles.frameContainer}>
-                        <View>
-                          <Text style={styles.villaValor}>Ojojona</Text>
-                          <View style={styles.vectorParent}>
-                            <Image
-                              style={styles.vectorIcon}
-                              resizeMode="cover"
-                              source={require("../assets/vector.png")}
-                            />
-                            <Text style={[styles.reseas, styles.reseasTypo]}>4.1 | 19 reseñas</Text>
-                          </View>
-                        </View>
-                        <Image
-                          style={styles.maskGroupIcon}
-                          resizeMode="cover"
-                          source={require("../assets/btn-favorites.png")}
-                        />
-                      </View>
-                    </View>
-                    <View style={styles.reseas}>
-                      <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
-                        Ojojona, Honduras
-                      </Text>
-                      <Text style={styles.diciembre10}>Mayo 20 - Mayo 29</Text>
-                      <Text style={styles.diciembre10}>L. 700 por noche</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
+              );
+                }
+            })}
             </View>
           </ScrollView>
         </View>
@@ -964,7 +903,7 @@ const styles2 = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     marginVertical: 10,
-    width: '100%',
+    width: '90%',
   },
   logoContainer: {
     alignItems: 'center',
@@ -1039,6 +978,7 @@ const Tab = createBottomTabNavigator();
 
 const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
   const firebaseUID = route.params.firebaseUID;
+
   const [correo, setCorreo] = useState('');
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [usuario, setUsuario] = useState('');

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const AlojamientosSchema = new mongoose.Schema({
     idAlojamiento: String,
+    nombre: String,
     ubicacion: String,
     precio: String,
     personas: String,

@@ -156,6 +156,7 @@ app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
 
     const alojamiento = new Alojamiento({
       idAlojamiento: req.body.idAlojamiento,
+      nombre: req.body.nombre,
       ubicacion: req.body.ubicacion,
       precio: req.body.precio,
       personas: req.body.personas,
@@ -176,10 +177,11 @@ app.post('/crearAlojamiento', upload.single('img'), async (req, res) => {
   }
 });
 
-app.get('/alojamientos', async (req, res) => {
+app.get('/alojamientos/:tipo', async (req, res) => {
   try {
-    const allAlojamientos = await Alojamiento.find({});
-    res.status(200).json(allAlojamientos);
+    const { tipo } = req.params;
+    const alojamientosPorTipo = await Alojamiento.find({ tipo: tipo });
+    res.status(200).json(alojamientosPorTipo);
   } catch (error) {
     console.error('Error obteniendo alojamientos: ', error);
     res.status(500).json({ error: 'Error obteniendo alojamientos' });
