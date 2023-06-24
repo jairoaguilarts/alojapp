@@ -187,9 +187,9 @@ app.get('/alojamientos/:tipo', async (req, res) => {
   }
 });
 
-app.get('/buscarAlojamiento', async (req, res) => {
+app.get('/buscarAlojamiento/:ubicacion', async (req, res) => {
   try {
-    const { ubicacion } = req.body;
+    const { ubicacion } = req.params;
     const alojamientosPorUbicacion = await Alojamiento.find({ ubicacion: ubicacion });
     res.status(200).json(alojamientosPorUbicacion);
   } catch (error) {
