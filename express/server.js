@@ -299,3 +299,27 @@ app.delete('/deleteCard/:firebaseUID/:cardId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+
+//Endpoint Para buscar obtener info de alojamiento
+app.get('/alojamientos/:idalojamiento', async (req, res) => {
+  try {
+    const idAlojamiento = req.params.idalojamiento;
+
+    const client = new MongoClient(mongoUri);
+    await client.connect();
+
+    const db = client.db();
+    const collection = db.collection('alojamientos');
+
+    const document = await collection.findOne({ idalojamiento: idAlojamiento });
+
+    res.json(document);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error obteniendo informacion de alojamiento' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
