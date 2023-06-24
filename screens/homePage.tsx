@@ -1014,13 +1014,13 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
             return <Image source={require('./icons/profile.png')} style={{ width: size, height: size, tintColor: color }} />;
           }
         },
-        activeTintColor: 'gray',
+        activeTintColor: '#495C83',
         inactiveTintColor: 'tomato',
       })}
     >
-      <Tab.Screen name="Home" options={{ headerShown: false }}>{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
-      <Tab.Screen name="Favoritos" component={FavoritosScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Perfil" options={{ headerShown: false }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
+      <Tab.Screen name="Home" options={{ headerShown: false, tabBarStyle: {backgroundColor: "#495C83"} }}>{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
+      <Tab.Screen name="Favoritos" component={FavoritosScreen} options={{ headerShown: false, tabBarStyle: {backgroundColor: "#495C83"} }} />
+      <Tab.Screen name="Perfil" options={{ headerShown: false, tabBarStyle: {backgroundColor: "#495C83"} }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
     </Tab.Navigator>
   );
 };
