@@ -21,25 +21,6 @@ type HomeProps = {
   route: RouteProp<RootStackParamList, 'HomePage'>;
 };
 
-function FavoritosScreen() {
-  return (
-    <View style={styles2.favoritosVaco}>
-      <View style={styles2.frameParent}>
-        <View style={styles2.groupParent}>
-          <Image
-            style={styles2.frameChild}
-            resizeMode="cover"
-            source={require("../assets/group-713.png")}
-          />
-          <Text style={[styles2.navegaPorLa, styles2.navegaPorLaFlexBox]}>
-            Navega por la aplicación para encontrar tu alojamiento favorito
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-}
-
 function PerfilScreen(props: { nombreUsuario: string, correo_electronico: string, usuario: string }) {
   const { nombreUsuario, correo_electronico, usuario } = props;
 
@@ -384,7 +365,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
   const [correo, setCorreo] = useState('');
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [usuario, setUsuario] = useState('');
-  const [firbaseUIDHP, setFirebaseUID] = useState('');
+  const [firebaseUIDHP, setFirebaseUID] = useState('');
 
   // Peticion al back para obtener la informacion del usuario
   fetch(`http://10.0.2.2:3000/usuario/${firebaseUID}`)
@@ -425,7 +406,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
       })}
     >
       <Tab.Screen name="Home" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
-      <Tab.Screen name="Favoritos" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <FavoritosScreen firbaseUID={firbaseUIDHP} />}</Tab.Screen>
+      <Tab.Screen name="Favoritos" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => (<FavoritosScreen firebaseUID={firebaseUID} />)}</Tab.Screen>
       <Tab.Screen name="Perfil" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
     </Tab.Navigator>
   );
