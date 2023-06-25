@@ -120,9 +120,11 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                             />
                                                             <View style={styles.frameContainer}>
                                                                 <View>
+                                                                <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
                                                                     <Text style={[styles.villaValor, styles.villaValorTypo]}>
                                                                         {alojamiento.nombre}
                                                                     </Text>
+                                                                    </TouchableOpacity>
                                                                     <View style={styles.vectorParent}>
                                                                         <Image
                                                                             style={styles.vectorIcon}
@@ -237,9 +239,11 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                                 />
                                                                 <View style={styles.frameContainer}>
                                                                     <View>
+                                                                    <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
                                                                         <Text style={[styles.villaValor, styles.villaValorTypo]}>
                                                                             {alojamiento.nombre}
                                                                         </Text>
+                                                                        </TouchableOpacity>
                                                                         <View style={styles.vectorParent}>
                                                                             <Image
                                                                                 style={styles.vectorIcon}
