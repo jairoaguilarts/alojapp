@@ -1,13 +1,34 @@
 import { Image, StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import React, { useState, useEffect, FC } from 'react';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+
+
+
+type ReservaScreenRouteProp = RouteProp<RootStackParamList, 'ReservaScreen'>;
+type ReservaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ReservaScreen'>;
+
+type RootStackParamList = {
+  ReservaScreen: {
+    idAlojamiento: string;
+    nombreUsuario: string;
+  };
+}
 
 interface Props {
   idAlojamiento: string;
   nombreUsuario: string;
+  route: ReservaScreenRouteProp;
+  navigation: ReservaScreenNavigationProp;
 }
 
-const ReservaScreen: FC<Props> = ({ idAlojamiento, nombreUsuario }) => {
+
+
+const ReservaScreen: FC<Props> = ({ route }) => {
+  const { idAlojamiento, nombreUsuario } = route.params;
   const [alojamiento, setAlojamiento] = useState<any[]>([]);
+
   useEffect(() => {
     console.log(idAlojamiento);
     fetch(`http://10.0.2.2:3000/obtenerInfoAlojamiento/${idAlojamiento}`)

@@ -2,7 +2,6 @@ import { Image, StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity 
 import React, { useState, useEffect, FC } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
 import { NavigationProp, useNavigation, RouteProp, NavigationContainer } from '@react-navigation/native';
-
 import ReservaScreen from "./reserva";
 
 type RootStackParamList = {
@@ -133,7 +132,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                             />
                                                             <View style={styles.frameContainer}>
                                                                 <View>
-                                                                <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
+                                                                <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen' , { idAlojamiento: alojamiento.idAlojamiento, nombreUsuario: nombreUsuario })}>
                                                                     <Text style={[styles.villaValor, styles.villaValorTypo]}>
                                                                         {alojamiento.nombre}
                                                                     </Text>
@@ -254,7 +253,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                                 />
                                                                 <View style={styles.frameContainer}>
                                                                     <View>
-                                                                    <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
+                                                                    <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen' , { idAlojamiento: alojamiento.idAlojamiento, nombreUsuario: nombreUsuario })}>
                                                                         <Text style={[styles.villaValor, styles.villaValorTypo]}>
                                                                             {alojamiento.nombre}
                                                                         </Text>
