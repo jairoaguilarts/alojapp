@@ -199,7 +199,7 @@ app.get('/buscarAlojamiento/:ubicacion', async (req, res) => {
 });
 
 //Endpoint Para buscar obtener info de alojamiento
-app.get('/idalojamientos/:idAlojamiento', async (req, res) => {
+app.get('/obtenerInfoAlojamiento/:idAlojamiento', async (req, res) => {
   try {
     const {idAlojamiento} = req.params;
     const document = await Alojamiento.find({ idAlojamiento: idAlojamiento });
