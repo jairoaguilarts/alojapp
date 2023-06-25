@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Alert, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Alert, Image, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
@@ -10,6 +10,7 @@ type RootStackParamList = {
   InicioSesion: undefined;
   CrearCuenta: undefined;
   HomePage: undefined;
+  HomeScreen:undefined;
   // Agrega otras rutas aquí si es necesario
 };
 

@@ -1,13 +1,26 @@
-import { Image, StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
+import { Image, StyleSheet, View, Text, TextInput, ScrollView,TouchableOpacity } from "react-native";
 import React, { useState, useEffect, FC } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
+import { NavigationProp,useNavigation,RouteProp } from '@react-navigation/native';
+
+
+
+type RootStackParamList = {
+    HomeScreen:undefined
+    ReservaScreen: undefined;
+    CrearCuenta: undefined;
+    // Agrega otras rutas aquí si es necesario
+  };
 
 interface Props {
     nombreUsuario: string;
+    navigation: NavigationProp<RootStackParamList, 'HomeScreen'>;
 }
 
-const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
+  
+const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
 
+    const navigation = useNavigation();
     const [alojamientosRecomendados, setAlojamientosRecomendados] = useState<any[]>([]);
     const [alojamientosEconomicos, setAlojamientosEconomicos] = useState<any[]>([]);
     const [searchText, setSearchText] = useState('');
@@ -124,9 +137,11 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
                                                             </View>
                                                         </View>
                                                         <View style={styles.reseas}>
+                                                         
                                                             <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
                                                                 {alojamiento.ubicacion}
                                                             </Text>
+                
                                                             <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
                                                             <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                                                         </View>
@@ -164,9 +179,12 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
                                                                 />
                                                                 <View style={styles.frameContainer}>
                                                                     <View>
+                                                                    <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
                                                                         <Text style={[styles.villaValor, styles.villaValorTypo]}>
                                                                             {alojamiento.nombre}
                                                                         </Text>
+                                                                        </TouchableOpacity>
+                                                                        
                                                                         <View style={styles.vectorParent}>
                                                                             <Image
                                                                                 style={styles.vectorIcon}
@@ -181,9 +199,11 @@ const HomeScreen: FC<Props> = ({ nombreUsuario }) => {
                                                                 </View>
                                                             </View>
                                                             <View style={styles.reseas}>
+                                                             
                                                                 <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
                                                                     {alojamiento.ubicacion}
                                                                 </Text>
+                                                                 
                                                                 <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
                                                                 <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                                                             </View>
