@@ -1,30 +1,43 @@
-import { Image, StyleSheet, View, Text, TextInput, ScrollView,TouchableOpacity } from "react-native";
+import { Image, StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import React, { useState, useEffect, FC } from 'react';
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
-import { NavigationProp,useNavigation,RouteProp } from '@react-navigation/native';
+import { NavigationProp, useNavigation, RouteProp, NavigationContainer } from '@react-navigation/native';
 
-
+import ReservaScreen from "./reserva";
 
 type RootStackParamList = {
-    HomeScreen:undefined
-    ReservaScreen: undefined;
+    HomeScreen: undefined
+    ReservaScreen: { idAlojamiento: string, nombreUsuario: string };
     CrearCuenta: undefined;
     // Agrega otras rutas aquí si es necesario
-  };
+};
 
 interface Props {
     nombreUsuario: string;
     navigation: NavigationProp<RootStackParamList, 'HomeScreen'>;
 }
 
-  
+interface IAlojamiento {
+    idAlojamiento: string;
+    imgSrc: string;
+    nombre: string;
+    estrellas: string;
+    resenas: string;
+    ubicacion: string;
+    fechaEntrada: string;
+    fechaSalida: string;
+    precio: string;
+    // añade o modifica los campos según necesites
+}
+
 const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
 
     const navigation = useNavigation();
-    const [alojamientosRecomendados, setAlojamientosRecomendados] = useState<any[]>([]);
-    const [alojamientosEconomicos, setAlojamientosEconomicos] = useState<any[]>([]);
+
+    const [alojamientosRecomendados, setAlojamientosRecomendados] = useState<IAlojamiento[]>([]);
+    const [alojamientosEconomicos, setAlojamientosEconomicos] = useState<IAlojamiento[]>([]);
     const [searchText, setSearchText] = useState('');
-    const [suggestions, setSuggestions] = useState<any[]>([]);
+    const [suggestions, setSuggestions] = useState<IAlojamiento[]>([]);
     const [searching, setSearching] = useState(false);
 
 
@@ -56,7 +69,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
 
     const handleSearchTextChange = (text: string) => {
         setSearchText(text);
-        if(text === ''){
+        if (text === '') {
             setSearching(false);
         } else {
             setSearching(true);
@@ -137,11 +150,11 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                             </View>
                                                         </View>
                                                         <View style={styles.reseas}>
-                                                         
+
                                                             <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
                                                                 {alojamiento.ubicacion}
                                                             </Text>
-                
+
                                                             <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
                                                             <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                                                         </View>
@@ -179,12 +192,12 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                                 />
                                                                 <View style={styles.frameContainer}>
                                                                     <View>
-                                                                    <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen')}>
-                                                                        <Text style={[styles.villaValor, styles.villaValorTypo]}>
-                                                                            {alojamiento.nombre}
-                                                                        </Text>
+                                                                        <TouchableOpacity onPress={() => navigation.navigate('ReservaScreen', { idAlojamiento: alojamiento.idAlojamiento, nombreUsuario: nombreUsuario })}>
+                                                                            <Text style={[styles.villaValor, styles.villaValorTypo]}>
+                                                                                {alojamiento.nombre}
+                                                                            </Text>
                                                                         </TouchableOpacity>
-                                                                        
+
                                                                         <View style={styles.vectorParent}>
                                                                             <Image
                                                                                 style={styles.vectorIcon}
@@ -199,11 +212,11 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                                                 </View>
                                                             </View>
                                                             <View style={styles.reseas}>
-                                                             
+
                                                                 <Text style={[styles.laCeibaHonduras, styles.reseasTypo]}>
                                                                     {alojamiento.ubicacion}
                                                                 </Text>
-                                                                 
+
                                                                 <Text style={styles.diciembre10}>{alojamiento.fechaEntrada} - {alojamiento.fechaSalida}</Text>
                                                                 <Text style={styles.diciembre10}>L. {alojamiento.precio} por noche</Text>
                                                             </View>
