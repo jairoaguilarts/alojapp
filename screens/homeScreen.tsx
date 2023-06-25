@@ -230,12 +230,14 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
                                     </View>
                                 </ScrollView>
                             </View>
+                            
                             <View style={[styles.frameParent3, styles.frameParentPosition]}>
                                 <View style={styles.recomendadosParent}>
                                     <Text style={[styles.recomendados, styles.recomendadosLayout]}>
                                         Económicos
                                     </Text>
                                 </View>
+                                
 
                                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                     <View style={{ flexDirection: 'row' }}>
@@ -499,13 +501,13 @@ const styles = StyleSheet.create({
     },
     recomendados: {
         width: 267,
-        fontSize: FontSize.headlineH6_size,
+        fontSize: FontSize.headlineH4_size,
         display: "flex",
         textAlign: "left",
         fontFamily: FontFamily.titleT2,
-        color: Color.ghostwhite,
+        color: 'white',
         height: 42,
-    },
+      },
     botnTerciario: {
         textDecorationLine: "underline",
         textAlign: "right",
