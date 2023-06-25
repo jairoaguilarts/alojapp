@@ -25,6 +25,7 @@ export const Color = {
   mainText: "#c0c0c7",
   grayscaleG1: "#ededed",
   ghostwhite: "#eaeaf2",
+  ghostwhite2: "#eaeaf2",
   lightskyblue_100: "rgba(136, 180, 245, 0.5)",
   grayscaleG2: "#b9b9b9",
   grayscaleG5: "#262626",
