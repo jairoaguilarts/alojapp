@@ -31,7 +31,7 @@ const ReservaScreen: FC<Props> = ({ nombreUsuario }) => {
 
           <View style={styles2.rowContainer_smaller}>
             <View style={styles2.sectionContainer}>
-              <Image source={require('./icons/star.jpeg')} style={styles2.inputImage} />
+              <Image source={require('./icons/star.png')} style={styles2.icono} />
               <Text style={styles2.fontSubtitulo}>{alojamiento.estrellas}</Text>
             </View>
 
@@ -42,7 +42,7 @@ const ReservaScreen: FC<Props> = ({ nombreUsuario }) => {
             </View>
             <TouchableOpacity style={styles2.buttonContainer}>
               <Image
-                source={require('./icons/btn-favoritos.jpeg')}
+                source={require('./icons/btn-favoritos.png')}
                 style={styles2.buttonImage}
               />
             </TouchableOpacity>
@@ -91,6 +91,7 @@ const ReservaScreen: FC<Props> = ({ nombreUsuario }) => {
     },
     imgContainer: {
       position: 'absolute',
+      backgroundColor: '#181c2c',
       top: 0,
       width: '100%',
       height: '40%',
@@ -112,7 +113,7 @@ const ReservaScreen: FC<Props> = ({ nombreUsuario }) => {
     rowContainer_smaller: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginRight: 100,
+      marginRight: 10,
       marginVertical: 10,
     },
     verticalLine: {
@@ -137,20 +138,21 @@ const ReservaScreen: FC<Props> = ({ nombreUsuario }) => {
     },
     icono: {
       margin: 20,
-      width: 30,
-      height: 30,
+      width: 50,
+      height: 50,
     },
     buttonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'flex-end',
       paddingHorizontal: 10,
       paddingVertical: 5,
       borderRadius: 15,
       marginLeft: 10
     },
     buttonImage: {
-      width: 20,
-      height: 20,
+      width: 50,
+      height: 50,
       marginRight: 5,
     },
     fontSubtitulo: {
