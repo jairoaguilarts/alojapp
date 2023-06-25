@@ -344,7 +344,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
         inactiveTintColor: 'tomato',
       })}
     >
-      <Tab.Screen name="Home" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <HomeScreen nombreUsuario={nombreUsuario} />}</Tab.Screen>
+      <Tab.Screen name="Home" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <HomeScreen nombreUsuario={nombreUsuario}  />}</Tab.Screen>
       <Tab.Screen name="Favoritos" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => <FavoritosScreens firebaseUID={firbaseUIDHP} />}</Tab.Screen>
       <Tab.Screen name="Perfil" options={{ headerShown: false, tabBarStyle: { backgroundColor: "#495C83" } }}>{() => (<PerfilScreen nombreUsuario={nombreUsuario} correo_electronico={correo} usuario={usuario} />)}</Tab.Screen>
     </Tab.Navigator>

@@ -13,11 +13,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, Image } from 'react-native';
 import { Colors, DebugInstructions, Header, LearnMoreLinks, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
+
 // Screens
 import Inicio from './screens/inicio';
 import InicioSesion from './screens/inicioSesion';
 import CrearCuenta from './screens/crearCuenta';
 import HomePage from './screens/homePage';
+import ReservaScreen from './screens/reserva';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,7 +67,8 @@ function App(): JSX.Element {
         <Stack.Screen name="Inicio" component={Inicio}  options={{ headerShown: false }}/>
         <Stack.Screen name="InicioSesion" component={InicioSesion} options={{ headerShown: false }} />
         <Stack.Screen name="CrearCuenta" component={CrearCuenta} options={{ headerShown: false }} />
-        <Stack.Screen name="HomePage" component={HomePage}  options={{ headerShown: false }}/>
+        <Stack.Screen name="HomePage" component={HomePage}  options={{ headerShown: false }} />
+        <Stack.Screen name="ReservaScreen" component={ReservaScreen}  options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
