@@ -11,20 +11,31 @@ interface Props {
 }
 
 const FavoritosScreen: FC<Props> = ({ firebaseUID }) => {
+  const [alojamiento, setAlojamiento] = useState<any | null>(null);
+  useEffect(() => {
+    fetch('http://10.0.2.2:3000//idalojamientos/:idAlojamiento')
+        .then(response => response.json())
+        .then(data => setAlojamiento(data))
+        .catch(error => console.error('Error:', error));
+}, []);
+
     return (
       <View style={styles2.favoritosVaco}>
-        <View style={styles2.frameParent}>
-          <View style={styles2.groupParent}>
-            <Image
-              style={styles2.frameChild}
-              resizeMode="cover"
-              source={require("../assets/group-713.png")}
-            />
-            <Text style={[styles2.navegaPorLa, styles2.navegaPorLaFlexBox]}>
-              Navega por la aplicación para encontrar tu alojamiento favorito
-            </Text>
-          </View>
+        <Image
+            style={{ width: 200, height: 200 }}
+            resizeMode="cover"
+            source={{ uri: alojamiento.imgSrc }}
+        />
+        <Text>{alojamiento.nombre}</Text>
+        <Text>{alojamiento.ubicacion}</Text>
+        <View>
+          <Text>Precio: {alojamiento.precio}</Text>
+          <Text>Personas: {alojamiento.personas}</Text>
         </View>
+        <View>
+          <Text>Fecha de entrada: {alojamiento.fechaEntrada}</Text>
+          <Text>Fecha de salida: {alojamiento.fechaSalida}</Text>
+      </View>
       </View>
     );
   }
