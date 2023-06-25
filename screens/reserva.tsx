@@ -30,7 +30,7 @@ const ReservaScreen: FC<Props> = ({ idAlojamiento, nombreUsuario }) => {
 
             <View style={styles2.rowContainer_smaller}>
               <View style={styles2.sectionContainer}>
-                <Image source={require('./icons/star.jpeg')} style={styles2.icono} />
+                <Image source={require('./icons/star.png')} style={styles2.icono} />
                 <Text style={styles2.fontSubtitulo}>{infoAlojamiento.estrellas}</Text>
               </View>
 
@@ -41,7 +41,7 @@ const ReservaScreen: FC<Props> = ({ idAlojamiento, nombreUsuario }) => {
               </View>
               <TouchableOpacity style={styles2.buttonContainer}>
                 <Image
-                  source={require('./icons/btn-favoritos.jpeg')}
+                  source={require('./icons/btn-favoritos.png')}
                   style={styles2.buttonImage}
                 />
               </TouchableOpacity>
