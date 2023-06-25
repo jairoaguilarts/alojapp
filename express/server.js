@@ -198,6 +198,18 @@ app.get('/buscarAlojamiento/:ubicacion', async (req, res) => {
   }
 });
 
+//Endpoint Para buscar obtener info de alojamiento
+app.get('/idalojamientos/:idAlojamiento', async (req, res) => {
+  try {
+    const {idAlojamiento} = req.params;
+    const document = await Alojamiento.find({ idAlojamiento: idAlojamiento });
+    res.json(document);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error obteniendo informacion de alojamiento' });
+  }
+});
+
 app.get('/favoritos', (req, res) => {
   Favorito.find({ uidUsuario: req.body.uidUsuario })
     .then(favoritos => {
@@ -300,15 +312,5 @@ app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
 
-//Endpoint Para buscar obtener info de alojamiento
-app.get('/idalojamientos/:idAlojamiento', async (req, res) => {
-  try {
-    const {idAlojamiento} = req.params;
-    const document = await Alojamiento.find({ idAlojamiento: idAlojamiento });
-    res.json(document);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error obteniendo informacion de alojamiento' });
-  }
-});
+ 
 
