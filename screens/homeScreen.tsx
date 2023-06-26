@@ -383,11 +383,12 @@ const styles = StyleSheet.create({
         position: "absolute",
     },
     groupLayout: {
-        height: 220,
-        width: 288,
+        height: 210,
+        width: 340,
+        marginBottom: 10,
     },
     villaValorTypo: {
-        fontSize: FontSize.headlineH6_size,
+        fontSize: 20,
         display: "flex",
         textAlign: "left",
         fontFamily: FontFamily.titleT2,

@@ -4,8 +4,7 @@ import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
-
-
+import Toast from 'react-native-toast-message';
 
 type ReservaScreenRouteProp = RouteProp<RootStackParamList, 'ReservaScreen'>;
 type ReservaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ReservaScreen'>;
@@ -39,7 +38,7 @@ const ReservaScreen: FC<Props> = ({ route }) => {
       .catch(error => console.error('Error:', error));
   }, []);
 
-  const Reservar = (idAlojamiento:string) => {
+  const Reservar = (idAlojamiento: string) => {
     const url = `http://10.0.2.2:3000/reservar/${idAlojamiento}`;
 
     fetch(url, {
@@ -51,22 +50,41 @@ const ReservaScreen: FC<Props> = ({ route }) => {
     })
       .then(response => {
         if (response.ok) {
-          console.log('Se hizo la reservacion');
+          return response.json();
+        } else if (response.status === 400) {
+          Toast.show({
+            type: 'info',
+            text1: 'Información',
+            text2: 'El alojamiento ya estaba reservado'
+          });
+          throw new Error('El alojamiento ya estaba reservado');
         } else {
-          console.error('Hubo un problema con la reservacion');  
+          throw new Error('Error del servidor');
         }
       })
+      .then(data => {
+        Toast.show({
+          type: 'success',
+          text1: '¡Éxito!',
+          text2: 'Reservación realizada con éxito'
+        });
+      })
       .catch(error => {
-        console.error('Hubo un problema con la reservacion:', error); 
+        if (error.message !== 'El alojamiento ya estaba reservado') {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Hubo un problema con la reservacion: ' + error.message
+          });
+        }
       });
   };
-  
 
   return (
     <ScrollView style={styles2.scrollViewContentContainer}>
       {alojamiento.map((infoAlojamiento) => {
         return (
-          <View key={infoAlojamiento.idAlojamiento} style={styles2.reservaContainer}>
+          <View key={infoAlojamiento.idAlojamiento} style={styles2.reservaContainer}>            
 
             <Image
               style={styles2.cardMainImage}
@@ -74,11 +92,12 @@ const ReservaScreen: FC<Props> = ({ route }) => {
               source={{ uri: infoAlojamiento.imgSrc }}
             />
             <View style={styles2.coContenedor}>
+              
               <Text style={[styles2.villaValor]}>
                 {infoAlojamiento.nombre}
               </Text>
 
-              
+
               <Text style={[styles2.laCeibaHonduras, styles2.textFlexBox]}>{infoAlojamiento.ubicacion}</Text>
               <View style={styles2.starParent}>
                 <Image
@@ -111,9 +130,9 @@ const ReservaScreen: FC<Props> = ({ route }) => {
 
 
 
-              <View style={styles2.horizontalLine}/>
+              <View style={styles2.horizontalLine} />
 
-              
+
 
               <View style={[styles2.disponibleParaRentaParent]}>
                 <Text style={[styles2.disponibleParaRenta, styles2.l2400Position]}>Disponible para renta</Text>
@@ -123,43 +142,43 @@ const ReservaScreen: FC<Props> = ({ route }) => {
               </View>
 
 
-              <View style={styles2.horizontalLine}/>
+              <View style={styles2.horizontalLine} />
 
 
               <View style={styles2.contenedorPaServicios}>
                 <Text style={[styles2.servicios]}>Servicios</Text>
                 <View style={styles2.contenedorServDesc}>
-                  <Image 
+                  <Image
                     style={styles2.starIcon}
                     resizeMode="cover"
-                    source={require("./icons/habitacion.png")}/>
-                    <Text style={styles2.text1Typo}>
-                      {infoAlojamiento.habitacion} habitaciones
-                    </Text>
+                    source={require("./icons/habitacion.png")} />
+                  <Text style={styles2.text1Typo}>
+                    {infoAlojamiento.habitacion} habitaciones
+                  </Text>
+                </View>
+                
+                <View style={styles2.contenedorServDesc}>
+                  <Image
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/bano.png")} />
+                  <Text style={styles2.text1Typo}>
+                    {infoAlojamiento.bano} baños
+                  </Text>
                 </View>
 
                 <View style={styles2.contenedorServDesc}>
-                  <Image 
+                  <Image
                     style={styles2.starIcon}
                     resizeMode="cover"
-                    source={require("./icons/bano.png")}/>
-                    <Text style={styles2.text1Typo}>
-                      {infoAlojamiento.bano} baños
-                    </Text>
+                    source={require("./icons/cama.png")} />
+                  <Text style={styles2.text1Typo}>
+                    {infoAlojamiento.cama} camas
+                  </Text>
                 </View>
 
                 <View style={styles2.contenedorServDesc}>
-                  <Image 
-                    style={styles2.starIcon}
-                    resizeMode="cover"
-                    source={require("./icons/cama.png")}/>
-                    <Text style={styles2.text1Typo}>
-                      {infoAlojamiento.cama} camas
-                    </Text>
-                </View>
-
-                <View style={styles2.contenedorServDesc}>
-                  <Image 
+                  <Image
                     style={styles2.starIcon}
                     resizeMode="cover"
                     source={require("./icons/comida.png")}
@@ -172,7 +191,7 @@ const ReservaScreen: FC<Props> = ({ route }) => {
                 </View>
 
                 <View style={styles2.contenedorServDesc}>
-                  <Image 
+                  <Image
                     style={styles2.starIcon}
                     resizeMode="cover"
                     source={require("./icons/wifi.png")}
@@ -183,30 +202,25 @@ const ReservaScreen: FC<Props> = ({ route }) => {
                     <Text style={styles2.text1Typo}>Wifi No Incluido</Text>
                   )}
                 </View>
+                <Toast config={{}} ref={(ref) => Toast.setRef(ref)} />
               </View>
             </View>
             <View style={styles2.contentContainer}>
-              {/* Aquí va tu contenido actual */}
-              
-              {/* Botón al final de la pantalla */}
               <TouchableOpacity style={styles2.button} onPress={() => Reservar(infoAlojamiento.idAlojamiento)}>
                 <Text style={styles2.buttonText}>Rentar | {infoAlojamiento.precio} por Noche</Text>
               </TouchableOpacity>
             </View>
           </View>
-          
+
         );
       })}
-  
     </ScrollView>
-    
-    
   );
 }
 
 const styles2 = StyleSheet.create({
   scrollViewContentContainer: {
-    paddingBottom: 30, 
+    paddingBottom: 30,
   },
   reservaContainer: {
     backgroundColor: Color.mainBackground,

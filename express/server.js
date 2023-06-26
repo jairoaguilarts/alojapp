@@ -211,6 +211,29 @@ app.get('/obtenerInfoAlojamiento/:idAlojamiento', async (req, res) => {
   }
 });
 
+app.put('/reservar/:idAlojamiento', (req, res) => {
+  const idAlojamiento = req.params.idAlojamiento;
+  
+  Alojamiento.findOne({ idAlojamiento: idAlojamiento })
+    .then(alojamiento => {
+      if (alojamiento.reservado == '1') {
+        res.status(400).json({ error: 'El alojamiento ya está reservado' });
+      } else {
+        Alojamiento.updateOne({ idAlojamiento: idAlojamiento }, { $set: { reservado: '1' } })
+          .then(result => {
+            res.status(200).json({ message: 'Alojamiento reservado con éxito' });
+          })
+          .catch(error => {
+            res.status(500).json({ error: 'Hubo un error al reservar el alojamiento' });
+          });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Hubo un error al buscar el alojamiento' });
+    });
+});
+
 app.get('/favoritos', (req, res) => {
   Favorito.find({ uidUsuario: req.body.uidUsuario })
     .then(favoritos => {
@@ -312,23 +335,3 @@ app.delete('/deleteCard/:firebaseUID/:cardId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
-
-// endpoint para hacer reserva
-app.put('/reservar/:idAlojamiento', (req, res) => {
-  const idAlojamiento = req.params.idAlojamiento;
-  Alojamiento.updateOne({ idAlojamiento: idAlojamiento }, { $set: { reservado: '1' } })
-    .then(result => {
-      console.log('Se reservo correctamente');
-      res.status(200).json({ message: 'Documents updated successfully' });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Hubo un error al reservar' });
-    });
-});
-
- 
-
-
-
-

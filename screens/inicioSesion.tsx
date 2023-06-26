@@ -55,8 +55,6 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
         .then(data => {
           if (data.success) {
             let firebaseUID = data.firebaseUID;
-          
-            console.log('Usuario autenticado correctamente: ', data.usuario);
             setNombre(data.usuario.nombre);
             setCorreo_electronico(data.usuario.correo);
             setUsuario(data.usuario.nombre_usuario);
