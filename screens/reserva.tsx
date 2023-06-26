@@ -67,7 +67,7 @@ const ReservaScreen: FC<Props> = ({ route }) => {
     <ScrollView style={styles2.scrollViewContentContainer}>
       {alojamiento.map((infoAlojamiento) => {
         return (
-          <View style={styles2.reservaContainer}>
+          <View key={infoAlojamiento.idAlojamiento} style={styles2.reservaContainer}>
 
             <Image
               style={styles2.cardMainImage}
