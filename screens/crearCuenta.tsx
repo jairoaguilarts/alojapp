@@ -50,7 +50,7 @@ const CrearCuenta: React.FC<CrearProps> = ({ navigation }) => {
         };
 
         // Realizar la petición POST
-        fetch('http://10.0.2.2:3000/agregarUsuario', {
+        fetch('http://back-alojapp.up.railway.app/agregarUsuario', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

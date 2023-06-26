@@ -43,7 +43,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
       };
 
       // Realizar la petición POST
-      fetch('http://10.0.2.2:3000/logIn', {
+      fetch('http://back-alojapp.up.railway.app/logIn', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
