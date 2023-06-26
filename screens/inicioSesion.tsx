@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Alert, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { set } from 'mongoose';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 type RootStackParamList = {
   Inicio: undefined;
@@ -15,7 +16,7 @@ type InicioProps = {
   navigation: NavigationProp<RootStackParamList, 'InicioSesion'>;
 };
 
-const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
+const InicioSesion: React.FC<InicioProps> = ({ navigation }) => {
   const logoImage = require('alojapp/Images/Alojapplogo.png');
 
   const [user, setNombre_usuario] = useState<string>('');
@@ -43,6 +44,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
       };
 
       // Realizar la petición POST
+
       fetch('http://10.0.2.2:3000/logIn', {
         method: 'POST',
         headers: {
@@ -51,20 +53,51 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
         },
         body: JSON.stringify(userData),
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            let firebaseUID = data.firebaseUID;
-            setNombre(data.usuario.nombre);
-            setCorreo_electronico(data.usuario.correo);
-            setUsuario(data.usuario.nombre_usuario);
-            navigation.navigate('HomePage', { firebaseUID: data.usuario.firebaseUID as string });
+        .then(response => {
+          if (response.ok) {
+            return response.json();
           } else {
-            console.error('Error durante el inicio de sesión: ', data.error);
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
         })
+        .then(data => {
+          let firebaseUID = data.usuario.firebaseUID;
+          setNombre(data.usuario.nombre);
+          setCorreo_electronico(data.usuario.correo);
+          setUsuario(data.usuario.nombre_usuario);
+          navigation.navigate('HomePage', { firebaseUID: data.usuario.firebaseUID as string });
+          Toast.show({
+            type: 'success',
+            text1: '¡Éxito!',
+            text2: 'Ingreso exitoso.',
+          });
+        })
         .catch((error) => {
-          console.error('Error:', error);
+          if (error.message.includes('400')) {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: 'Falta el usuario o contraseña.',
+            });
+          } else if (error.message.includes('500')) {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: 'Credenciales incorrectas.',
+            });
+          } else if (error.message.includes('404')) {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: 'Usuario no encontrado.',
+            });
+          } else {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: `Un error inesperado ocurrió: ${error.message}`,
+            });
+          }
         });
 
     } catch (error) {
@@ -90,7 +123,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
       );
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -128,7 +161,7 @@ const InicioSesion: React.FC<InicioProps> = ({ navigation })=> {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.createAccountLink}  onPress={() => navigation.navigate('CrearCuenta')}>
+          <TouchableOpacity style={styles.createAccountLink} onPress={() => navigation.navigate('CrearCuenta')}>
             <Text style={styles.createAccountText}>Crear cuenta</Text>
           </TouchableOpacity>
         </View>

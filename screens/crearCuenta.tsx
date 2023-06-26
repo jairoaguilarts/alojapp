@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, Alert, Image, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Alert, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
-
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 type RootStackParamList = {
   Inicio: undefined;
   InicioSesion: undefined;
   CrearCuenta: undefined;
   HomePage: undefined;
-  HomeScreen:undefined;
+  HomeScreen: undefined;
   // Agrega otras rutas aquí si es necesario
 };
 
@@ -58,21 +58,50 @@ const CrearCuenta: React.FC<CrearProps> = ({ navigation }) => {
           },
           body: JSON.stringify(userData),
         })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              console.log('Usuario creado correctamente: ', data.usuario);
+          .then(response => {
+            if (response.ok) {
+              return response.json();
             } else {
-              console.error('Error durante el registro: ', data.error);
+              throw new Error(`HTTP error! status: ${response.status}`);
             }
           })
+          .then(data => {
+            Toast.show({
+              type: 'success',
+              text1: '¡Éxito!',
+              text2: 'Usuario creado correctamente.'
+            });
+            navigation.navigate('InicioSesion');
+          })
           .catch((error) => {
-            console.error('Error:', error);
+            if (error.message.includes('400')) {
+              Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'El usuario ya existe.',
+              });
+            } else if (error.message.includes('500')) {
+              Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Error del servidor.',
+              });
+            } else {
+              Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: `Un error inesperado ocurrió: ${error.message}`,
+              });
+            }
           });
 
       } catch (error) {
         console.log(error);
-        Alert.alert('Registro fallido')
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Registro fallido',
+        });
       }
     }
   };
@@ -194,7 +223,7 @@ const CrearCuenta: React.FC<CrearProps> = ({ navigation }) => {
               </View>
 
               <TouchableOpacity style={styles.forgotPasswordLink} onPress={() => navigation.navigate('InicioSesion')}>
-                <Text style={styles.forgotPasswordText }>Inicia sesión</Text>
+                <Text style={styles.forgotPasswordText}>Inicia sesión</Text>
               </TouchableOpacity>
             </View>
           </>
