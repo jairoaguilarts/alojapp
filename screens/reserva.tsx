@@ -34,7 +34,6 @@ const ReservaScreen: FC<Props> = ({ route }) => {
   const [alojamiento, setAlojamiento] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log(idAlojamiento);
     fetch(`http://10.0.2.2:3000/obtenerInfoAlojamiento/${idAlojamiento}`)
       .then(response => response.json())
       .then(data => setAlojamiento(data))
