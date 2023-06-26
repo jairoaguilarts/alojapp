@@ -1,6 +1,8 @@
 import { Image, StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import React, { useState, useEffect, FC } from 'react';
+import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { RouteProp } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 
@@ -24,6 +26,8 @@ interface Props {
 }
 
 
+const Tab = createBottomTabNavigator();
+
 
 const ReservaScreen: FC<Props> = ({ route }) => {
   const { idAlojamiento, nombreUsuario } = route.params;
@@ -38,150 +42,313 @@ const ReservaScreen: FC<Props> = ({ route }) => {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView style={styles2.scrollViewContentContainer}>
       {alojamiento.map((infoAlojamiento) => {
         return (
           <View style={styles2.reservaContainer}>
+
             <Image
-              style={styles2.imgContainer}
+              style={styles2.cardMainImage}
               resizeMode="cover"
               source={{ uri: infoAlojamiento.imgSrc }}
             />
-            <Text style={styles2.fontTituloNombre}>{infoAlojamiento.nombre}</Text>
+            <View style={styles2.coContenedor}>
+              <Text style={[styles2.villaValor]}>
+                {infoAlojamiento.nombre}
+              </Text>
 
-            <View style={styles2.rowContainer_smaller}>
-              <View style={styles2.sectionContainer}>
-                <Image source={require('./icons/star.png')} style={styles2.icono} />
-                <Text style={styles2.fontSubtitulo}>{infoAlojamiento.estrellas}</Text>
-              </View>
-
-              <View style={styles2.verticalLine} />
-
-              <View style={styles2.sectionContainer}>
-                <Text style={styles2.fontSubtitulo}>{infoAlojamiento.resenas} resenas</Text>
-              </View>
-              <TouchableOpacity style={styles2.buttonContainer}>
+              
+              <Text style={[styles2.laCeibaHonduras, styles2.textFlexBox]}>{infoAlojamiento.ubicacion}</Text>
+              <View style={styles2.starParent}>
                 <Image
-                  source={require('./icons/btn-favoritos.png')}
-                  style={styles2.buttonImage}
+                  style={styles2.starIcon}
+                  resizeMode="cover"
+                  source={require("./icons/star.png")}
                 />
+                <Text style={styles2.text1Typo}>{infoAlojamiento.estrellas} | {infoAlojamiento.resenas} reseñas</Text>
+              </View>
+
+
+              <View style={styles2.groupParent}>
+                <View style={styles2.l2400Parent}>
+                  <Text style={[styles2.l2400, styles2.btnFlexBox]}>L. {infoAlojamiento.precio}</Text>
+                  <Text style={[styles2.porNoche, styles2.porNochePosition]}>Por Noche</Text>
+                </View>
+
+                <Image
+                  style={styles2.frameChild}
+                  resizeMode="cover"
+                  source={require("./icons/linea-vert.png")}
+                />
+
+
+                <View style={styles2.alojamientoRentadoPorParent}>
+                  <Text style={[styles2.alojamientoRentadoPor, styles2.l2400Position]}>Alojamiento rentado por</Text>
+                  <Text style={[styles2.luisaLopez, styles2.l2400Position]}>{nombreUsuario}</Text>
+                </View>
+              </View>
+
+
+
+              <View style={styles2.horizontalLine}/>
+
+              
+
+              <View style={[styles2.disponibleParaRentaParent]}>
+                <Text style={[styles2.disponibleParaRenta, styles2.l2400Position]}>Disponible para renta</Text>
+                <Text style={[styles2.diciembre10, styles2.l2400Position]}>
+                  {infoAlojamiento.fechaEntrada} - {infoAlojamiento.fechaSalida}
+                </Text>
+              </View>
+
+
+              <View style={styles2.horizontalLine}/>
+
+
+              <View style={styles2.contenedorPaServicios}>
+                <Text style={[styles2.servicios]}>Servicios</Text>
+                <View style={styles2.contenedorServDesc}>
+                  <Image 
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/habitacion.png")}/>
+                    <Text style={styles2.text1Typo}>
+                      {infoAlojamiento.habitacion} habitaciones
+                    </Text>
+                </View>
+
+                <View style={styles2.contenedorServDesc}>
+                  <Image 
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/bano.png")}/>
+                    <Text style={styles2.text1Typo}>
+                      {infoAlojamiento.bano} baños
+                    </Text>
+                </View>
+
+                <View style={styles2.contenedorServDesc}>
+                  <Image 
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/cama.png")}/>
+                    <Text style={styles2.text1Typo}>
+                      {infoAlojamiento.cama} camas
+                    </Text>
+                </View>
+
+                <View style={styles2.contenedorServDesc}>
+                  <Image 
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/comida.png")}
+                  />
+                  {infoAlojamiento.desayunoIncluido ? (
+                    <Text style={styles2.text1Typo}>Desayuno Incluido</Text>
+                  ) : (
+                    <Text style={styles2.text1Typo}>Desayuno No Incluido</Text>
+                  )}
+                </View>
+
+                <View style={styles2.contenedorServDesc}>
+                  <Image 
+                    style={styles2.starIcon}
+                    resizeMode="cover"
+                    source={require("./icons/wifi.png")}
+                  />
+                  {infoAlojamiento.wifi ? (
+                    <Text style={styles2.text1Typo}>Wifi Incluido</Text>
+                  ) : (
+                    <Text style={styles2.text1Typo}>Wifi No Incluido</Text>
+                  )}
+                </View>
+              </View>
+            </View>
+            <View style={styles2.contentContainer}>
+              {/* Aquí va tu contenido actual */}
+              
+              {/* Botón al final de la pantalla */}
+              <TouchableOpacity style={styles2.button}>
+                <Text style={styles2.buttonText}>Rentar | {infoAlojamiento.precio} por Noche</Text>
               </TouchableOpacity>
             </View>
-            <Text>{infoAlojamiento.ubicacion}</Text>
-
-
-            <View style={styles2.rowContainer}>
-              <View style={styles2.sectionContainer}>
-                <Text style={styles2.fontTitulo}>L. {infoAlojamiento.precio}</Text>
-                <Text style={styles2.fontSubtitulo}>Por Noche</Text>
-              </View>
-
-              <View style={styles2.verticalLine} />
-
-              <View style={styles2.sectionContainer}>
-                <Text style={styles2.fontSubtitulo}>Alojamiento rentado por</Text>
-                <Text style={styles2.fontTitulo}>{nombreUsuario}</Text>
-              </View>
-            </View>
-            <View style={styles2.horizontalLine} />
-
-            <View>
-              <Text style={styles2.fontSubtitulo}>Disponible para renta</Text>
-              <Text>{infoAlojamiento.fechaEntrada} - {infoAlojamiento.fechaSalida}</Text>
-            </View>
-            <View style={styles2.horizontalLine} />
           </View>
+          
         );
       })}
+  
     </ScrollView>
+    
+    
   );
 }
 
 const styles2 = StyleSheet.create({
+  scrollViewContentContainer: {
+    paddingBottom: 30, 
+  },
   reservaContainer: {
-    backgroundColor: '#181c2c',
+    backgroundColor: Color.mainBackground,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    //overflow: "hidden",
+    width: "100%",
     paddingVertical: 10,
   },
-  sectionContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  coContenedor: {
+    marginLeft: 20,
   },
-  imgContainer: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '40%',
-    resizeMode: 'contain',
+  cardMainImage: {
+    height: 429,
+    width: 428,
+    marginBottom: 8,
   },
-  fontTituloNombre: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    marginVertical: 15,
-    marginHorizontal: 15,
-    color: '#fff'
+  starParent: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 50,
   },
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  rowContainer_smaller: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 100,
-    marginVertical: 10,
-  },
-  verticalLine: {
-    width: 1,
-    height: '60%',
-    backgroundColor: 'black',
-    marginHorizontal: 10,
-  },
-  horizontalLine: {
-    width: '80%',
-    height: 3,
-    backgroundColor: '#2d3652',
-    marginVertical: 10
-  },
-  fontTitulo: {
-    fontSize: 20,
-    fontWeight: '100',
-    textAlign: 'center',
-    marginVertical: 15,
-    marginHorizontal: 15,
-    color: '#fff'
-  },
-  icono: {
-    margin: 20,
-    width: 30,
-    height: 30,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 15,
-    marginLeft: 10
-  },
-  buttonImage: {
+  starIcon: {
     width: 20,
     height: 20,
-    marginRight: 5,
+    marginRight: 8,
   },
-  fontSubtitulo: {
-    fontSize: 14,
-    fontWeight: '100',
+  text1Typo: {
+    fontSize: 20,
+    fontFamily: FontFamily.headlineH4,
+    color: "white"
+  },
+  villaValor: {
+    fontSize: 30,
+    color: "white",
+    marginBottom: 8,
+    //alignItems: "center",
+  },
+  laCeibaHonduras: {
+    fontFamily: FontFamily.headlineH4,
+    fontSize: FontSize.labelL1_size,
+    textAlign: "left",
+    marginBottom: 8,
+  },
+  textFlexBox: {
+    textAlign: "left",
+    color: Color.mainText,
+  },
+  groupParent: {
+    alignItems: "center",
+    flexDirection: "row",
+    //marginBottom: 30,
+  },
+  l2400Parent: {
+    height: 51,
+    width: 80,
+    marginRight: 12,
+  },
+  l2400: {
+    fontSize: 20,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
     textAlign: 'center',
-    marginVertical: 2,
-    color: '#fff'
-  }
+  },
+  btnFlexBox: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  porNochePosition: {
+    left: 1,
+  },
+  porNoche: {
+    fontSize: FontSize.labelL1_size,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
+    textAlign: 'center',
+  },
+  frameChild: {
+    width: 1,
+    height: 71,
+  },
+  alojamientoRentadoPorParent: {
+    width: 188,
+    marginLeft: 12,
+  },
+  alojamientoRentadoPor: {
+    fontSize: FontSize.labelL1_size,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
+  },
+  l2400Position: {
+    left: 0,
+  },
+  luisaLopez: {
+    fontSize: 20,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
+  },
+  disponibleParaRentaParent: {
+    height: 56,
+    width: 300,
+    marginBottom: 8,
+  },
+
+  disponibleParaRenta: {
+    fontSize: FontSize.labelL1_size,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
+  },
+  diciembre10: {
+    fontSize: 20,
+    color: Color.mainText,
+    fontFamily: FontFamily.headlineH4,
+  },
+  contenedorPaServicios: {
+    marginBottom: 50,
+  },
+  servicios: {
+    fontSize: 20,
+    color: Color.mainText,
+    marginBottom: 8,
+    fontFamily: FontFamily.headlineH4,
+    textAlign: "left",
+  },
+  contenedorServDesc: {
+    flexDirection: "row",
+    textAlign: "left",
+    marginBottom: 4,
+    marginTop: 2,
+    marginLeft: 2,
+  },
+  contentContainer: {
+    flex: 1,
+    paddingBottom: 16,
+  },
+  button: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopLeftRadius: Border.br_xl,
+    borderTopRightRadius: Border.br_xl,
+    backgroundColor: Color.mainAccent,
+  },
+  buttonText: {
+    color: Color.mainText2,
+    fontSize: 20,
+    fontFamily: FontFamily.headlineH4,
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    textAlign: "center",
+  },
+
+  horizontalLine: {
+    width: '90%',
+    height: 3,
+    backgroundColor: '#2d3652',
+    marginVertical: 25
+  },
+
 });
 
 export default ReservaScreen;

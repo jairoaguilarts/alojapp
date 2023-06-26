@@ -11,6 +11,12 @@ const AlojamientosSchema = new mongoose.Schema({
     estrellas: String,
     resenas: String,
     tipo: String,
+    habitacion: String,
+    bano: String,
+    cama: String,
+    desayunoIncluido: String,
+    wifi: String,
+    reservado: String,
 });
 
 const alojamientos = mongoose.model('alojamientos', AlojamientosSchema)
