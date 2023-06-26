@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, Image } from 'react-native';
 import { Colors, DebugInstructions, Header, LearnMoreLinks, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-
+import Toast from 'react-native-toast-message';
 
 // Screens
 import Inicio from './screens/inicio';
@@ -70,6 +70,7 @@ function App(): JSX.Element {
         <Stack.Screen name="HomePage" component={HomePage}  options={{ headerShown: false }} />
         <Stack.Screen name="ReservaScreen" component={ReservaScreen}  options={{ headerShown: false }}/>
       </Stack.Navigator>
+      <Toast config={{}} />
     </NavigationContainer>
   );
 }

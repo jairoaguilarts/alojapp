@@ -202,7 +202,6 @@ const ReservaScreen: FC<Props> = ({ route }) => {
                     <Text style={styles2.text1Typo}>Wifi No Incluido</Text>
                   )}
                 </View>
-                <Toast config={{}} ref={(ref) => Toast.setRef(ref)} />
               </View>
             </View>
             <View style={styles2.contentContainer}>
