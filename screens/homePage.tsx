@@ -307,7 +307,7 @@ const HomePage: React.FC<HomeProps> = ({ navigation, route }) => {
   const [firbaseUIDHP, setFirebaseUID] = useState('');
 
   // Peticion al back para obtener la informacion del usuario
-  fetch(`http://back-alojapp.up.railway.app/usuario/${firebaseUID}`)
+  fetch(`http://10.0.2.2:3000/usuario/${firebaseUID}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Ocurrió un error en la respuesta');

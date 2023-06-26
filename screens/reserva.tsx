@@ -32,14 +32,14 @@ const ReservaScreen: FC<Props> = ({ route }) => {
   const [alojamiento, setAlojamiento] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch(`http://back-alojapp.up.railway.app/obtenerInfoAlojamiento/${idAlojamiento}`)
+    fetch(`http://10.0.2.2:3000/obtenerInfoAlojamiento/${idAlojamiento}`)
       .then(response => response.json())
       .then(data => setAlojamiento(data))
       .catch(error => console.error('Error:', error));
   }, []);
 
   const Reservar = (idAlojamiento: string) => {
-    const url = `http://back-alojapp.up.railway.app/reservar/${idAlojamiento}`;
+    const url = `http://10.0.2.2:3000/reservar/${idAlojamiento}`;
 
     fetch(url, {
       method: 'PUT',

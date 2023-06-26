@@ -42,7 +42,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
 
     // Carga los alojamientos recomendados
     useEffect(() => {
-        fetch('http://back-alojapp.up.railway.app/alojamientos/r')
+        fetch('http://10.0.2.2:3000/alojamientos/r')
             .then(response => response.json())
             .then(data => setAlojamientosRecomendados(data))
             .catch(error => console.error('Error:', error));
@@ -50,7 +50,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
 
     // Carga los alojamientos economicos
     useEffect(() => {
-        fetch('http://back-alojapp.up.railway.app/alojamientos/e')
+        fetch('http://10.0.2.2:3000/alojamientos/e')
             .then(response => response.json())
             .then(data => setAlojamientosEconomicos(data))
             .catch(error => console.error('Error:', error));
@@ -59,7 +59,7 @@ const HomeScreen: React.FC<Props> = ({ nombreUsuario }) => {
     // Carga los alojamientos por busqueda de ubicacion
     useEffect(() => {
         if (searchText !== '') {
-            fetch(`http://back-alojapp.up.railway.app/buscarAlojamiento/${searchText}`)
+            fetch(`http://10.0.2.2:3000/buscarAlojamiento/${searchText}`)
                 .then(response => response.json())
                 .then(data => setSuggestions(data))
                 .catch(error => console.error('Error:', error));
