@@ -4,7 +4,6 @@ import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
-import axios from 'axios';
 
 
 
