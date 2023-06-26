@@ -45,12 +45,9 @@ npm i stripe
 ```
 node server.js
 ```
-2. Vuelva a la carpeta madre, e inicialice el VDM y la aplicacion
+2. Ejecute el  apk que se encuentra en:
 ```
-npx react-native run-android
-```
-```
-run react-native start
+./android/app/builds/outputs/apk/debug
 ```
 3. Al iniciar la app, ingrese con su cuenta, sino registrese, y luego tendra libre acceso al contenido disponible.
 
