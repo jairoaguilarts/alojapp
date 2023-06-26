@@ -9,6 +9,7 @@ const { initializeApp } = require('firebase/app');
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } = require('firebase/auth');
 const { firebaseConfig, mongoUri } = require('./configDB/config');
 
+
 const app = express();
 const appFirebase = initializeApp(firebaseConfig);
 const port = 3000;
@@ -312,5 +313,22 @@ app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
 
+// endpoint para hacer reserva
+app.put('/reservar/:idAlojamiento', (req, res) => {
+  const idAlojamiento = req.params.idAlojamiento;
+  Alojamiento.updateOne({ idAlojamiento: idAlojamiento }, { $set: { reservado: '1' } })
+    .then(result => {
+      console.log('Se reservo correctamente');
+      res.status(200).json({ message: 'Documents updated successfully' });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Hubo un error al reservar' });
+    });
+});
+
  
+
+
+
 

@@ -4,7 +4,7 @@ import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import axios from 'axios';
 
 
 
@@ -39,6 +39,29 @@ const ReservaScreen: FC<Props> = ({ route }) => {
       .then(data => setAlojamiento(data))
       .catch(error => console.error('Error:', error));
   }, []);
+
+  const Reservar = (idAlojamiento:string) => {
+    const url = `http://10.0.2.2:3000/reservar/${idAlojamiento}`;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reservado: '1' }),
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Se hizo la reservacion');
+        } else {
+          console.error('Hubo un problema con la reservacion');  
+        }
+      })
+      .catch(error => {
+        console.error('Hubo un problema con la reservacion:', error); 
+      });
+  };
+  
 
   return (
     <ScrollView style={styles2.scrollViewContentContainer}>
@@ -167,7 +190,7 @@ const ReservaScreen: FC<Props> = ({ route }) => {
               {/* Aquí va tu contenido actual */}
               
               {/* Botón al final de la pantalla */}
-              <TouchableOpacity style={styles2.button}>
+              <TouchableOpacity style={styles2.button} onPress={() => Reservar(infoAlojamiento.idAlojamiento)}>
                 <Text style={styles2.buttonText}>Rentar | {infoAlojamiento.precio} por Noche</Text>
               </TouchableOpacity>
             </View>
